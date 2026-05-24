@@ -15,9 +15,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Backend (Flask)
 
 ```bash
-cd backend
-
-# Install deps (venv already at backend/venv)
+# Install deps (venv already at ./venv)
 ./venv/Scripts/pip install -r requirements.txt
 
 # Run dev server
@@ -58,7 +56,7 @@ npm run build
 ### PostgreSQL Connection
 
 - User: `app`, Password: `password`, DB: `skincare`, Port: 5432
-- Config in `backend/config.py` (overridable via `.env`)
+- Config in `config.py` (overridable via `.env`)
 
 ### Docker
 
@@ -78,7 +76,7 @@ docker compose down
 Flask + Flask-RESTx layered structure:
 
 ```
-backend/app/
+app/
 ├── api/            # Flask-RESTx namespaces (auth, users, products, tags)
 ├── auth/           # JWT decorators (jwt_required, admin_required)
 ├── models/         # SQLAlchemy models (User, Product, FormType, EffectType, FunctionType)

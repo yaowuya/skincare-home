@@ -12,10 +12,11 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends netcat-openbsd && rm -rf /var/lib/apt/lists/*
 
-COPY backend/requirements.txt ./
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY backend/ ./
+COPY app/ ./app/
+COPY config.py entrypoint.sh ./
 COPY --from=frontend /app/dist /app/static
 
 RUN chmod +x entrypoint.sh

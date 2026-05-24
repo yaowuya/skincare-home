@@ -9,9 +9,9 @@
 ## Task 3.1: Users API
 
 **Files:**  
-- Create: `backend/app/api/users.py`
+- Create: `app/api/users.py`
 
-### Step 1: Create `backend/app/api/users.py`
+### Step 1: Create `app/api/users.py`
 
 Flask-RESTx namespace `users_ns` with endpoints:
 
@@ -37,9 +37,9 @@ All endpoints use `@admin_required` decorator.
 ## Task 3.2: Tags API
 
 **Files:**  
-- Create: `backend/app/api/tags.py`
+- Create: `app/api/tags.py`
 
-### Step 1: Create `backend/app/api/tags.py`
+### Step 1: Create `app/api/tags.py`
 
 Flask-RESTx namespace `tags_ns` with endpoints:
 
@@ -61,9 +61,9 @@ Flask-RESTx namespace `tags_ns` with endpoints:
 ## Task 3.3: Products API
 
 **Files:**  
-- Create: `backend/app/api/products.py`
+- Create: `app/api/products.py`
 
-### Step 1: Create `backend/app/api/products.py`
+### Step 1: Create `app/api/products.py`
 
 Flask-RESTx namespace `products_ns` with endpoints:
 
@@ -105,12 +105,12 @@ Flask-RESTx namespace `products_ns` with endpoints:
 ## Task 3.4: Write resource API tests
 
 **Files:**  
-- Create: `backend/tests/test_users.py`  
-- Create: `backend/tests/test_products.py`  
-- Create: `backend/tests/test_tags.py`  
-- Create: `backend/tests/test_upload.py`
+- Create: `tests/test_users.py`  
+- Create: `tests/test_products.py`  
+- Create: `tests/test_tags.py`  
+- Create: `tests/test_upload.py`
 
-### Step 1: Create `backend/tests/test_users.py`
+### Step 1: Create `tests/test_users.py`
 
 ```python
 import pytest
@@ -250,7 +250,7 @@ class TestApproveUser:
         assert resp.get_json()["is_approved"] is False
 ```
 
-### Step 2: Create `backend/tests/test_tags.py`
+### Step 2: Create `tests/test_tags.py`
 
 ```python
 class TestListTags:
@@ -335,7 +335,7 @@ class TestDeleteTag:
         assert EffectType.query.get(tid) is None
 ```
 
-### Step 3: Create `backend/tests/test_products.py`
+### Step 3: Create `tests/test_products.py`
 
 ```python
 import io
@@ -496,7 +496,7 @@ class TestProductImage:
         assert resp.status_code == 401
 ```
 
-### Step 4: Create `backend/tests/test_upload.py`
+### Step 4: Create `tests/test_upload.py`
 
 ```python
 import io
@@ -563,6 +563,6 @@ Expected: 40+ tests passing with no failures.
 ## Task 3.5: Commit
 
 ```bash
-git add backend/app/api/users.py backend/app/api/tags.py backend/app/api/products.py backend/tests/
+git add app/api/users.py app/api/tags.py app/api/products.py backend/tests/
 git commit -m "feat: add users, products, tags API with unit tests"
 ```

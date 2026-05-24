@@ -2,8 +2,8 @@ import os
 from datetime import timedelta
 from dotenv import load_dotenv
 
-# Load .env from project root (parent of backend/)
-dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env")
+# Load .env from project root
+dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
 load_dotenv(dotenv_path)
 
 
@@ -11,7 +11,7 @@ class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-change-in-production")
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL",
-        "postgresql://app:password@localhost:5432/skincare",
+        "postgresql://postgres:root@localhost:5432/skincare",
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 

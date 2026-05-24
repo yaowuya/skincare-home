@@ -9,9 +9,9 @@
 ## Task 2.1: Auth API namespace
 
 **Files:**  
-- Create: `backend/app/api/auth.py`
+- Create: `app/api/auth.py`
 
-### Step 1: Create `backend/app/api/auth.py`
+### Step 1: Create `app/api/auth.py`
 
 Flask-RESTx namespace `auth_ns` with four endpoints:
 
@@ -47,14 +47,14 @@ Flask-RESTx namespace `auth_ns` with four endpoints:
 ## Task 2.2: Test infrastructure
 
 **Files:**  
-- Create: `backend/tests/conftest.py`  
-- Create: `backend/tests/__init__.py`
+- Create: `tests/conftest.py`  
+- Create: `tests/__init__.py`
 
-### Step 1: Create `backend/tests/__init__.py`
+### Step 1: Create `tests/__init__.py`
 
 Empty file.
 
-### Step 2: Create `backend/tests/conftest.py`
+### Step 2: Create `tests/conftest.py`
 
 ```python
 import pytest
@@ -125,9 +125,9 @@ def user_headers(client, db):
 ## Task 2.3: Write auth unit tests
 
 **Files:**  
-- Create: `backend/tests/test_auth.py`
+- Create: `tests/test_auth.py`
 
-### Step 1: Create `backend/tests/test_auth.py`
+### Step 1: Create `tests/test_auth.py`
 
 ```python
 import pytest
@@ -292,6 +292,6 @@ Expected: All tests pass (16+ tests).
 ## Task 2.4: Commit
 
 ```bash
-git add backend/app/api/auth.py backend/tests/
+git add app/api/auth.py backend/tests/
 git commit -m "feat: add auth API with JWT and unit tests"
 ```

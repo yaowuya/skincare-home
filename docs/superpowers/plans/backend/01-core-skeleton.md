@@ -9,9 +9,9 @@
 ## Task 1.1: Project structure
 
 **Files:**  
-- Create: `backend/app/__init__.py`  
-- Create: `backend/config.py`  
-- Create: `backend/requirements.txt`
+- Create: `app/__init__.py`  
+- Create: `config.py`  
+- Create: `requirements.txt`
 
 ### Step 1: Verify backend directory exists
 
@@ -21,7 +21,7 @@ ls backend/
 
 Expected: `app/  config.py  requirements.txt` and subdirectories already exist.
 
-### Step 2: Update `backend/requirements.txt`
+### Step 2: Update `requirements.txt`
 
 ```text
 flask==3.1.1
@@ -40,7 +40,7 @@ pytest==8.3.5
 pytest-flask==1.3.0
 ```
 
-### Step 3: Verify/update `backend/config.py`
+### Step 3: Verify/update `config.py`
 
 ```python
 import os
@@ -88,7 +88,7 @@ FLASK_ENV=development
 EOF
 ```
 
-### Step 5: Verify `backend/app/__init__.py` app factory
+### Step 5: Verify `app/__init__.py` app factory
 
 Ensure it contains:
 - `create_app(config_object=None)` that loads Config by default
@@ -112,11 +112,11 @@ Expected: `OK` with no errors.
 ## Task 1.2: Database models
 
 **Files:**  
-- Create: `backend/app/models/__init__.py`  
-- Create: `backend/app/models/user.py`  
-- Create: `backend/app/models/product.py`
+- Create: `app/models/__init__.py`  
+- Create: `app/models/user.py`  
+- Create: `app/models/product.py`
 
-### Step 1: Create `backend/app/models/user.py`
+### Step 1: Create `app/models/user.py`
 
 ```python
 import uuid
@@ -155,7 +155,7 @@ class User(db.Model):
         }
 ```
 
-### Step 2: Create `backend/app/models/product.py`
+### Step 2: Create `app/models/product.py`
 
 Contains five models: `Product`, `FormType`, `EffectType`, `FunctionType` plus three association tables (`product_form_tags`, `product_effect_tags`, `product_function_tags`).
 
@@ -165,7 +165,7 @@ Product model has: `id, name, description, ingredients, image, published_at, cre
 
 `to_dict()` returns all fields plus nested tag lists.
 
-### Step 3: Create `backend/app/models/__init__.py`
+### Step 3: Create `app/models/__init__.py`
 
 ```python
 from app.models.user import User
@@ -187,11 +187,11 @@ Expected: No import errors.
 ## Task 1.3: Auth decorators + CLI commands + Upload utils
 
 **Files:**  
-- Create: `backend/app/auth/decorators.py`  
-- Create: `backend/app/cli.py`  
-- Create: `backend/app/utils/upload.py`
+- Create: `app/auth/decorators.py`  
+- Create: `app/cli.py`  
+- Create: `app/utils/upload.py`
 
-### Step 1: `backend/app/auth/decorators.py`
+### Step 1: `app/auth/decorators.py`
 
 Must export:
 - `generate_token(user_id)` — creates HS256 JWT with `user_id`, `exp`, `iat`
@@ -203,13 +203,13 @@ Error cases:
 - 401: Missing/expired/invalid token
 - 403: Non-admin user hits admin endpoint
 
-### Step 2: `backend/app/cli.py`
+### Step 2: `app/cli.py`
 
 Two click commands registered via `register_commands(app)`:
 - `flask create-admin --username --email --password` — creates admin user (idempotent)
 - `flask seed-tags` — seeds 7 default `FunctionType` rows
 
-### Step 3: `backend/app/utils/upload.py`
+### Step 3: `app/utils/upload.py`
 
 Must export:
 - `allowed_file(filename)` — checks jpg/png/webp extension
@@ -221,6 +221,6 @@ Must export:
 ## Task 1.4: Commit
 
 ```bash
-git add backend/ .env
+git add  .env
 git commit -m "feat: add Flask backend skeleton with models and config"
 ```

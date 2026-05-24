@@ -9,13 +9,13 @@
 ## Task D1: Docker configuration files
 
 **Files:**  
-- Create: `backend/Dockerfile`  
-- Create: `backend/entrypoint.sh`  
+- Create: `Dockerfile`  
+- Create: `entrypoint.sh`  
 - Create: `docker-compose.yml`  
 - Create: `.env.example`  
 - Modify: `.gitignore`
 
-### Step 1: `backend/Dockerfile` (multi-stage)
+### Step 1: `Dockerfile` (multi-stage)
 
 ```dockerfile
 # Stage 1: Build Vue frontend
@@ -32,7 +32,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends netcat-openbsd && rm -rf /var/lib/apt/lists/*
 
-COPY backend/requirements.txt ./
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY backend/ ./
@@ -44,7 +44,7 @@ EXPOSE 5000
 ENTRYPOINT ["./entrypoint.sh"]
 ```
 
-### Step 2: `backend/entrypoint.sh`
+### Step 2: `entrypoint.sh`
 
 ```bash
 #!/bin/sh
@@ -68,7 +68,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     env_file: .env
@@ -173,6 +173,6 @@ Expected: API returns JSON, SPA returns HTML.
 ## Task D3: Commit
 
 ```bash
-git add backend/Dockerfile backend/entrypoint.sh docker-compose.yml .env.example .gitignore
+git add Dockerfile entrypoint.sh docker-compose.yml .env.example .gitignore
 git commit -m "feat: add Docker deployment configuration"
 ```

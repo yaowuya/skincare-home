@@ -10,7 +10,7 @@ migrate = Migrate()
 
 
 def create_app(config_object=None):
-    app = Flask(__name__, static_folder="../static", static_url_path="")
+    app = Flask(__name__, static_folder="static", static_url_path="")
 
     if config_object:
         app.config.from_object(config_object)
@@ -48,7 +48,7 @@ def create_app(config_object=None):
     api.add_namespace(tags_ns, path="/tags")
 
     # SPA fallback: serve Vue frontend for non-API routes
-    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "static")
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 
     @app.route("/")
     def index():

@@ -42,26 +42,25 @@ Flow: `N/A` (no Nginx) → Flask (Gunicorn, `:5000`) handles all routes:
 
 ```
 skincare-home/
-├── backend/
-│   ├── app/
-│   │   ├── __init__.py          # create_app(), register blueprints
-│   │   ├── models/
-│   │   │   ├── user.py
-│   │   │   ├── product.py
-│   │   │   └── tag.py
-│   │   ├── api/
-│   │   │   ├── auth.py          # register / login / me
-│   │   │   ├── users.py         # admin user CRUD
-│   │   │   ├── products.py      # product CRUD + image upload
-│   │   │   └── tags.py          # tag CRUD (3 types)
-│   │   ├── auth/
-│   │   │   └── decorators.py    # JWT required, admin required
-│   │   └── utils/
-│   │       └── upload.py        # file upload helper
-│   ├── config.py                # Flask config (env-based)
-│   ├── requirements.txt
-│   ├── Dockerfile               # multi-stage (Node → Python)
-│   └── entrypoint.sh
+├── app/
+│   ├── __init__.py          # create_app(), register blueprints
+│   ├── models/
+│   │   ├── user.py
+│   │   ├── product.py
+│   │   └── tag.py
+│   ├── api/
+│   │   ├── auth.py          # register / login / me
+│   │   ├── users.py         # admin user CRUD
+│   │   ├── products.py      # product CRUD + image upload
+│   │   └── tags.py          # tag CRUD (3 types)
+│   ├── auth/
+│   │   └── decorators.py    # JWT required, admin required
+│   └── utils/
+│       └── upload.py        # file upload helper
+├── config.py                # Flask config (env-based)
+├── requirements.txt
+├── Dockerfile               # multi-stage (Node → Python)
+├── entrypoint.sh
 ├── frontend/
 │   ├── src/
 │   │   ├── api/                 # Axios instance + API modules
@@ -391,9 +390,10 @@ RUN npm run build
 FROM python:3.12-slim
 WORKDIR /app
 COPY --from=frontend /app/dist /app/static
-COPY backend/requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY backend/ ./
+COPY app/ ./app/
+COPY config.py entrypoint.sh ./
 EXPOSE 5000
 CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:create_app()"]
 ```
