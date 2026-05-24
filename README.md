@@ -74,7 +74,33 @@ npm run dev
 
 前端开发服务器运行在 `http://localhost:3000`，自动代理 `/api` 到后端 `:5000`。
 
-### 5. 初始化
+### 5. 数据库迁移
+
+首次初始化（只需执行一次，会创建 `migrations/` 目录）：
+
+```bash
+./venv/Scripts/flask db init
+```
+
+每次模型变更后生成迁移脚本：
+
+```bash
+./venv/Scripts/flask db migrate -m "迁移说明"
+```
+
+应用迁移到数据库：
+
+```bash
+./venv/Scripts/flask db upgrade
+```
+
+回滚迁移：
+
+```bash
+./venv/Scripts/flask db downgrade
+```
+
+### 6. 初始化数据
 
 ```bash
 # 创建管理员账号
@@ -83,6 +109,36 @@ npm run dev
 # 初始化功能分类标签
 ./venv/Scripts/flask seed-tags
 ```
+
+## PyCharm 配置
+
+### 1. 配置 Python 解释器
+- 打开 `File → Settings → Project: skincare-home → Python Interpreter`
+- 点击 ⚙ → `Add Local Interpreter`
+- 选择 `Existing` → 路径指向 `venv/Scripts/python.exe`
+- 点击 `OK`
+
+### 2. 配置 Flask Run（开发调试）
+
+**方式 A — 直接运行 main.py（推荐）**
+- 在 `main.py` 上右键 → `Run 'main'`
+- 或点击右上角 `Add Configuration...` → `+` → `Python`
+- Script path: 选择 `main.py`
+
+**方式 B — Flask 运行配置**
+- 点击右上角 `Add Configuration...` → `+` → `Flask Server`
+- Target type: `Script path`
+- FLASK_SCRIPT: 选择 `wsgi.py`
+- 勾选 `FLASK_DEBUG`
+- Additional options: `--host 0.0.0.0 --port 5000`
+- Working directory: 项目根目录
+- Environment variables: `FLASK_ENV=development`
+
+### 3. 配置 Tests
+- `Add Configuration...` → `+` → `Python tests → pytest`
+- Target: `Custom` → 输入 `tests/`
+- Working directory: 项目根目录
+- Python interpreter: 选择 venv
 
 ## Docker 部署
 
