@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Details - WEITAI Light Shield Sunscreen</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#ffb1c0",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-container-highest": "#d9e3f6",
+                        "secondary": "#b6155e",
+                        "inverse-surface": "#27313f",
+                        "on-secondary-fixed-variant": "#8e0046",
+                        "bg-soft-lavender": "#F5F3FF",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#3f001b",
+                        "secondary-fixed": "#ffd9e1",
+                        "on-surface": "#121c2a",
+                        "background": "#f8f9ff",
+                        "tertiary-fixed": "#e8ddff",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#ffd9df",
+                        "on-primary-fixed": "#3f0017",
+                        "surface-variant": "#d9e3f6",
+                        "on-primary-fixed-variant": "#90003d",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#121c2a",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container": "#e6eeff",
+                        "tertiary": "#6448b3",
+                        "surface-container-high": "#dee9fc",
+                        "surface-dim": "#d0dbed",
+                        "on-secondary-container": "#5d002c",
+                        "tertiary-fixed-dim": "#cebdff",
+                        "tertiary-container": "#7e62ce",
+                        "on-surface-variant": "#5b3f44",
+                        "surface": "#f8f9ff",
+                        "glass-white": "rgba(255, 255, 255, 0.7)",
+                        "on-tertiary-container": "#fffbff",
+                        "data-border": "#E5E7EB",
+                        "outline-variant": "#e4bdc3",
+                        "outline": "#8f6f74",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#ffb1c0",
+                        "bg-soft-pink": "#FFF1F2",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#fffbff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#fd5393",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#ffb1c6",
+                        "primary-container": "#e40a65",
+                        "primary": "#b7004f",
+                        "on-tertiary-fixed": "#21005e",
+                        "surface-container-low": "#eff4ff",
+                        "surface-tint": "#bc0051",
+                        "on-tertiary-fixed-variant": "#4f319c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "base": "8px",
+                        "section-gap": "80px",
+                        "container-padding-desktop": "40px",
+                        "container-padding-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f9ff; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid #E5E7EB; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-on-surface antialiased flex flex-col min-h-screen pt-20">
+<!-- TopNavBar -->
+<header class="bg-glass-white dark:bg-inverse-surface/90 backdrop-blur-md fixed top-0 w-full z-50 border-b border-white/20 shadow-sm">
+<div class="flex justify-between items-center px-container-padding-desktop max-w-7xl mx-auto h-20">
+<div class="flex items-center gap-2">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-inverse-primary">CosmeticLab Insights</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-label-md font-label-md" href="#">Portfolio</a>
+<a class="text-primary dark:text-inverse-primary border-b-2 border-primary dark:border-inverse-primary pb-1 font-bold text-label-md font-label-md" href="#">Trends</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-label-md font-label-md" href="#">Case Studies</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-label-md font-label-md" href="#">About</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-label-md font-label-md" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:flex items-center justify-center bg-primary text-on-primary rounded-full px-6 py-2.5 text-label-md font-label-md scale-95 active:scale-90 transition-transform">
+                    Consult Now
+                </button>
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden md:hidden">
+<span class="material-symbols-outlined w-full h-full flex items-center justify-center text-on-surface-variant">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-container-padding-mobile md:px-container-padding-desktop py-12 flex flex-col gap-12">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex text-sm text-on-surface-variant mb-4">
+<ol class="flex items-center space-x-2">
+<li><a class="hover:text-primary transition-colors" href="#">Home</a></li>
+<li><span class="material-symbols-outlined text-sm">chevron_right</span></li>
+<li><a class="hover:text-primary transition-colors" href="#">New Products</a></li>
+<li><span class="material-symbols-outlined text-sm">chevron_right</span></li>
+<li aria-current="page" class="text-primary font-medium">Light Shield Sunscreen</li>
+</ol>
+</nav>
+<!-- Product Hero Section (Two Column Split) -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Left Column: Image Carousel -->
+<div class="md:col-span-7 flex flex-col gap-4 relative">
+<div class="relative w-full aspect-[4/5] md:aspect-square bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm group">
+<!-- Main Image Placeholder -->
+<img alt="Product Image" class="w-full h-full object-cover transition-opacity duration-300" id="main-carousel-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfJgznBdjxexD-KUg4U7KJWgltXrEhnlC6pREbbGi11okyVlmBHcdts1LKaTaRXXPdz3N-oaIZB2vBp7zv0M76kP3mgxGOqSTIv42etLqE3_qdlA4No0oZlzPE0MWSvw1-uw0uVg2UfHXlR5zj5hHHaC_rlWaYjvbApF8EZ-GR8GZhVLWV_BpghOwa_p37FTFmig6b9V-eTB300pn0SDqg4zXgUfFdDeX3RqovTq2dwlnxdfEgaHa0sAIZ6S8eqTD7tDCYcj_eHYmD"/>
+<!-- Navigation Arrows -->
+<button class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-glass-white backdrop-blur-md rounded-full flex items-center justify-center shadow-sm text-on-surface opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary" onclick="prevImage()">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-glass-white backdrop-blur-md rounded-full flex items-center justify-center shadow-sm text-on-surface opacity-0 group-hover:opacity-100 transition-opacity hover:text-primary" onclick="nextImage()">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<!-- Thumbnail Indicators -->
+<div class="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
+<button class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 border-primary transition-all carousel-thumb" onclick="setMainImage(this, 'https://lh3.googleusercontent.com/aida-public/AB6AXuCfJgznBdjxexD-KUg4U7KJWgltXrEhnlC6pREbbGi11okyVlmBHcdts1LKaTaRXXPdz3N-oaIZB2vBp7zv0M76kP3mgxGOqSTIv42etLqE3_qdlA4No0oZlzPE0MWSvw1-uw0uVg2UfHXlR5zj5hHHaC_rlWaYjvbApF8EZ-GR8GZhVLWV_BpghOwa_p37FTFmig6b9V-eTB300pn0SDqg4zXgUfFdDeX3RqovTq2dwlnxdfEgaHa0sAIZ6S8eqTD7tDCYcj_eHYmD')">
+<img alt="Thumbnail 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfJgznBdjxexD-KUg4U7KJWgltXrEhnlC6pREbbGi11okyVlmBHcdts1LKaTaRXXPdz3N-oaIZB2vBp7zv0M76kP3mgxGOqSTIv42etLqE3_qdlA4No0oZlzPE0MWSvw1-uw0uVg2UfHXlR5zj5hHHaC_rlWaYjvbApF8EZ-GR8GZhVLWV_BpghOwa_p37FTFmig6b9V-eTB300pn0SDqg4zXgUfFdDeX3RqovTq2dwlnxdfEgaHa0sAIZ6S8eqTD7tDCYcj_eHYmD"/>
+</button>
+<button class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 border-transparent hover:border-primary/50 transition-all carousel-thumb" onclick="setMainImage(this, 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2epH84hf-e6gIk4wyftCI1TB0TcMOfBNCxYTR7mNGfqCPIVO2RJQchMd4erSCFVxor_qWxe1SQyA4jIMWsafXXbYGG15peiXzprCt-SiOFyui1_nw-Y7LmWWREuNVyqIhOzYiQzyQGNeXEw6EY62EcesG7hYvAJfYMVNmbWKTfmUQoB0vhqMKwC1cKV7Esx1azaG9fStRgSFEGMvORqRQI2hrKqARX4biSds3XY2sOQ8KOJr6JlXHHD2IqPpv4V9IBjPEdH5FTKvl')">
+<img alt="Thumbnail 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2epH84hf-e6gIk4wyftCI1TB0TcMOfBNCxYTR7mNGfqCPIVO2RJQchMd4erSCFVxor_qWxe1SQyA4jIMWsafXXbYGG15peiXzprCt-SiOFyui1_nw-Y7LmWWREuNVyqIhOzYiQzyQGNeXEw6EY62EcesG7hYvAJfYMVNmbWKTfmUQoB0vhqMKwC1cKV7Esx1azaG9fStRgSFEGMvORqRQI2hrKqARX4biSds3XY2sOQ8KOJr6JlXHHD2IqPpv4V9IBjPEdH5FTKvl"/>
+</button>
+<button class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 border-transparent hover:border-primary/50 transition-all carousel-thumb" onclick="setMainImage(this, 'https://lh3.googleusercontent.com/aida-public/AB6AXuAkB6ATrDZ04ILWBl8A2seTLH7pnsqUrR9LSzbLy58sE_GEIJdBLD5WF2AfO_0Ynk5_ZcX-RNg4BPcYU21yqbawQpC3wz2wQSow-X0p_2k_8NTtFN5KH15AuWJ5R9XwSCjqXNDU9gvbA3Iz8IxMF472I0kFUVfJzrdm1lTjJI9WeiVP2qkOuP2T7IaZz4yb_eefl6DFaFGtYStn432FSfoNHiGpvF0Q0tItPTbFLQkeG5ZtCRczBsWLu1tF3ckkGbbWwX3nw9J5YScR')">
+<img alt="Thumbnail 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkB6ATrDZ04ILWBl8A2seTLH7pnsqUrR9LSzbLy58sE_GEIJdBLD5WF2AfO_0Ynk5_ZcX-RNg4BPcYU21yqbawQpC3wz2wQSow-X0p_2k_8NTtFN5KH15AuWJ5R9XwSCjqXNDU9gvbA3Iz8IxMF472I0kFUVfJzrdm1lTjJI9WeiVP2qkOuP2T7IaZz4yb_eefl6DFaFGtYStn432FSfoNHiGpvF0Q0tItPTbFLQkeG5ZtCRczBsWLu1tF3ckkGbbWwX3nw9J5YScR"/>
+</button>
+</div>
+</div>
+<!-- Right Column: Product Information -->
+<div class="md:col-span-5 flex flex-col justify-start">
+<!-- Tags -->
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed text-xs font-semibold tracking-wide uppercase rounded-full">Anti-aging</span>
+<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-xs font-semibold tracking-wide uppercase rounded-full">Sun Protection</span>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant text-xs font-semibold tracking-wide uppercase rounded-full">Moisturizing</span>
+</div>
+<!-- Title & Basic Info -->
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-2">光盾修颜抗皱日霜</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant mb-6">Light Shield Anti-Wrinkle Sunscreen Cream</p>
+<div class="glass-card p-6 rounded-2xl mb-8 flex flex-col gap-4">
+<div class="flex justify-between items-center border-b border-data-border pb-4">
+<span class="text-label-md font-label-md text-on-surface-variant">Net Content</span>
+<span class="text-body-md font-body-md text-on-surface font-semibold">30g</span>
+</div>
+<div class="flex justify-between items-center border-b border-data-border pb-4">
+<span class="text-label-md font-label-md text-on-surface-variant">Category</span>
+<span class="text-body-md font-body-md text-on-surface">Daily Suncare / Anti-aging</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-label-md font-label-md text-on-surface-variant">Release Date</span>
+<span class="text-body-md font-body-md text-on-surface">Q3 2024</span>
+</div>
+</div>
+<!-- Key Selling Points -->
+<h3 class="text-headline-md font-headline-md text-on-surface mb-4">Key Innovations</h3>
+<ul class="flex flex-col gap-3 mb-8">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">verified</span>
+<div>
+<p class="text-body-md font-body-md font-semibold text-on-surface">Micron-sized Pearl Powder</p>
+<p class="text-sm text-on-surface-variant">Reflects natural light for a soft-focus, radiant finish without white cast.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">water_drop</span>
+<div>
+<p class="text-body-md font-body-md font-semibold text-on-surface">4D Hyaluronic Acid</p>
+<p class="text-sm text-on-surface-variant">Deep layer hydration locking moisture throughout the day.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">shield</span>
+<div>
+<p class="text-body-md font-body-md font-semibold text-on-surface">Collagen Lock Technology</p>
+<p class="text-sm text-on-surface-variant">Advanced UV protection combined with anti-aging peptides.</p>
+</div>
+</li>
+</ul>
+<!-- Description -->
+<div class="mb-8">
+<h3 class="text-headline-md font-headline-md text-on-surface mb-2">Development Notes</h3>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+                        Formulated to break the traditional constraints of sunscreen, this "Light Shield" day cream merges high-efficacy UV defense with advanced skincare benefits. Its lightweight, serum-like texture absorbs instantly, leaving a breathable, non-greasy finish. Ideal for urban environments, it protects against photoaging while simultaneously treating fine lines.
+                    </p>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-4 mt-auto pt-6 border-t border-data-border">
+<button class="flex-1 bg-primary text-on-primary rounded-full px-8 py-4 text-label-md font-label-md shadow-sm hover:shadow-md transition-all active:scale-95 flex items-center justify-center gap-2">
+<span>Consult Development Details</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+<button class="flex-none bg-surface-container-highest text-primary border border-primary/20 rounded-full px-8 py-4 text-label-md font-label-md hover:bg-primary-fixed transition-colors active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">mail</span>
+<span>Contact Manager</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-inverse-surface border-t border-data-border dark:border-outline-variant w-full py-12 mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding-desktop max-w-7xl mx-auto gap-gutter">
+<span class="text-headline-md font-headline-md text-primary">CosmeticLab Insights</span>
+<div class="flex gap-6 items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100 text-label-md font-label-md" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100 text-label-md font-label-md" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100 text-label-md font-label-md" href="#">LinkedIn</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100 text-label-md font-label-md" href="#">Behance</a>
+</div>
+<span class="text-secondary dark:text-secondary-fixed text-body-md font-body-md opacity-80">© 2024 Cosmetic Product Development Manager. All rights reserved.</span>
+</div>
+</footer>
+<!-- Simple Carousel Logic -->
+<script>
+        const images = [
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuCfJgznBdjxexD-KUg4U7KJWgltXrEhnlC6pREbbGi11okyVlmBHcdts1LKaTaRXXPdz3N-oaIZB2vBp7zv0M76kP3mgxGOqSTIv42etLqE3_qdlA4No0oZlzPE0MWSvw1-uw0uVg2UfHXlR5zj5hHHaC_rlWaYjvbApF8EZ-GR8GZhVLWV_BpghOwa_p37FTFmig6b9V-eTB300pn0SDqg4zXgUfFdDeX3RqovTq2dwlnxdfEgaHa0sAIZ6S8eqTD7tDCYcj_eHYmD',
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuC2epH84hf-e6gIk4wyftCI1TB0TcMOfBNCxYTR7mNGfqCPIVO2RJQchMd4erSCFVxor_qWxe1SQyA4jIMWsafXXbYGG15peiXzprCt-SiOFyui1_nw-Y7LmWWREuNVyqIhOzYiQzyQGNeXEw6EY62EcesG7hYvAJfYMVNmbWKTfmUQoB0vhqMKwC1cKV7Esx1azaG9fStRgSFEGMvORqRQI2hrKqARX4biSds3XY2sOQ8KOJr6JlXHHD2IqPpv4V9IBjPEdH5FTKvl',
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuAkB6ATrDZ04ILWBl8A2seTLH7pnsqUrR9LSzbLy58sE_GEIJdBLD5WF2AfO_0Ynk5_ZcX-RNg4BPcYU21yqbawQpC3wz2wQSow-X0p_2k_8NTtFN5KH15AuWJ5R9XwSCjqXNDU9gvbA3Iz8IxMF472I0kFUVfJzrdm1lTjJI9WeiVP2qkOuP2T7IaZz4yb_eefl6DFaFGtYStn432FSfoNHiGpvF0Q0tItPTbFLQkeG5ZtCRczBsWLu1tF3ckkGbbWwX3nw9J5YScR'
+        ];
+        let currentIndex = 0;
+        const mainImage = document.getElementById('main-carousel-image');
+        const thumbs = document.querySelectorAll('.carousel-thumb');
+
+        function updateMainImage(index) {
+            mainImage.style.opacity = 0;
+            setTimeout(() => {
+                mainImage.src = images[index];
+                mainImage.style.opacity = 1;
+                
+                // Update thumb styles
+                thumbs.forEach((t, i) => {
+                    if(i === index) {
+                        t.classList.add('border-primary');
+                        t.classList.remove('border-transparent');
+                    } else {
+                        t.classList.remove('border-primary');
+                        t.classList.add('border-transparent');
+                    }
+                });
+            }, 150);
+        }
+
+        function setMainImage(thumbElement, src) {
+            currentIndex = images.indexOf(src);
+            if(currentIndex !== -1) {
+                updateMainImage(currentIndex);
+            }
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateMainImage(currentIndex);
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateMainImage(currentIndex);
+        }
+    </script>
+</body></html>

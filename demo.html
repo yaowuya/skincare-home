@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CosmeticLab Insights | 新品速递</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#1A56A8",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#3B7DD4",
+                    "on-primary-container": "#ffffff",
+                    "primary-fixed": "#D6E4FF",
+                    "primary-fixed-dim": "#B0CCFF",
+                    "on-primary-fixed": "#001A3E",
+                    "on-primary-fixed-variant": "#00418A",
+                    "secondary": "#1E6091",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#4A8FC0",
+                    "on-secondary-container": "#001A2E",
+                    "secondary-fixed": "#CFE5FF",
+                    "secondary-fixed-dim": "#A8D0F0",
+                    "on-secondary-fixed": "#001A2E",
+                    "on-secondary-fixed-variant": "#004870",
+                    "tertiary": "#4A4FA8",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#6B70C8",
+                    "on-tertiary-container": "#ffffff",
+                    "tertiary-fixed": "#E0E0FF",
+                    "tertiary-fixed-dim": "#C5C5FF",
+                    "on-tertiary-fixed": "#0A0A5E",
+                    "on-tertiary-fixed-variant": "#33389A",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "on-background": "#121c2a",
+                    "surface": "#f8f9ff",
+                    "on-surface": "#121c2a",
+                    "on-surface-variant": "#5b3f44",
+                    "surface-variant": "#d9e3f6",
+                    "surface-dim": "#d0dbed",
+                    "surface-bright": "#f8f9ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container": "#e6eeff",
+                    "surface-container-high": "#dee9fc",
+                    "surface-container-highest": "#d9e3f6",
+                    "inverse-surface": "#27313f",
+                    "inverse-on-surface": "#eaf1ff",
+                    "inverse-primary": "#B0CCFF",
+                    "outline": "#8f6f74",
+                    "outline-variant": "#C4CCDA",
+                    "surface-tint": "#1A56A8",
+                    "bg-soft-lavender": "#F5F3FF",
+                    "bg-soft-pink": "#FFF1F2",
+                    "glass-white": "rgba(255, 255, 255, 0.7)",
+                    "data-border": "#E5E7EB",
+                },
+                borderRadius: {
+                    DEFAULT: "0.25rem",
+                    sm: "0.25rem",
+                    md: "0.5rem",
+                    lg: "0.75rem",
+                    xl: "1rem",
+                    "2xl": "1.25rem",
+                    "3xl": "1.5rem",
+                    full: "9999px",
+                },
+                spacing: {
+                    base: "8px",
+                    "container-padding-desktop": "40px",
+                    "container-padding-mobile": "20px",
+                    gutter: "24px",
+                    "section-gap": "80px",
+                },
+                fontFamily: {
+                    display: ["Plus Jakarta Sans"],
+                    headline: ["Plus Jakarta Sans"],
+                    body: ["Plus Jakarta Sans"],
+                    label: ["Plus Jakarta Sans"],
+                },
+            }
+        }
+    }
+</script>
+<style>
+    body {
+        font-family: 'Plus Jakarta Sans', 'PingFang SC', -apple-system, sans-serif;
+        background-color: #f8f9ff;
+    }
+    .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .masonry-grid {
+        columns: 1;
+        gap: 24px;
+    }
+    @media (min-width: 768px) {
+        .masonry-grid { columns: 2; }
+    }
+    @media (min-width: 1024px) {
+        .masonry-grid { columns: 3; }
+    }
+    .masonry-item {
+        break-inside: avoid;
+        margin-bottom: 24px;
+    }
+    .floating-fab {
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .floating-fab:hover {
+        transform: translateY(-8px);
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Product card hover glow */
+    .product-card:hover {
+        box-shadow: 0 20px 60px -12px rgba(26, 86, 168, 0.12);
+    }
+
+    /* Active tab indicator */
+    .nav-tab-active {
+        background: white;
+        color: #121c2a;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Custom scrollbar for modal */
+    .modal-scroll::-webkit-scrollbar { width: 4px; }
+    .modal-scroll::-webkit-scrollbar-track { background: transparent; }
+    .modal-scroll::-webkit-scrollbar-thumb { background: #C4CCDA; border-radius: 9999px; }
+
+    /* Fade-in animation */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+    .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+    /* Pulse ring for FAB */
+    @keyframes pulse-ring {
+        0% { transform: scale(0.9); opacity: 0.6; }
+        100% { transform: scale(1.3); opacity: 0; }
+    }
+    .pulse-ring::before {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border-radius: 9999px;
+        border: 2px solid #1A56A8;
+        animation: pulse-ring 2s ease-out infinite;
+    }
+</style>
+</head>
+<body class="text-on-background antialiased">
+
+<!-- ========== Floating Navigation ========== -->
+<div class="fixed top-4 w-full z-40 flex justify-center pointer-events-none">
+    <div class="inline-flex items-center bg-white/40 backdrop-blur-md p-1.5 rounded-[2rem] border border-white/30 shadow-sm pointer-events-auto">
+        <nav class="flex gap-1 px-2">
+            <a class="nav-tab-active px-6 py-3 rounded-[1.8rem] font-bold text-base transition-all" href="#">新品速递</a>
+            <a class="px-6 py-3 text-on-surface-variant hover:text-primary transition-colors font-bold text-base rounded-[1.8rem] hover:bg-white/50" href="#">原料库</a>
+            <a class="px-6 py-3 text-on-surface-variant hover:text-primary transition-colors font-bold text-base rounded-[1.8rem] hover:bg-white/50" href="#">策划广场</a>
+            <a class="px-6 py-3 text-on-surface-variant hover:text-primary transition-colors font-bold text-base rounded-[1.8rem] hover:bg-white/50" href="#">配方库</a>
+            <a class="px-6 py-3 text-on-surface-variant hover:text-primary transition-colors font-bold text-base rounded-[1.8rem] hover:bg-white/50 hidden sm:block" href="#">医疗器械</a>
+        </nav>
+    </div>
+</div>
+
+<!-- ========== Hero Section ========== -->
+<main class="pt-[80px]">
+<section class="relative h-[280px] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-bg-soft-lavender via-white to-bg-soft-pink opacity-80"></div>
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div class="absolute top-[10%] left-[15%] w-64 h-64 bg-tertiary-fixed rounded-full blur-[80px] opacity-30"></div>
+        <div class="absolute bottom-[10%] right-[15%] w-80 h-80 bg-primary-fixed rounded-full blur-[100px] opacity-40"></div>
+        <div class="absolute top-[40%] right-[30%] w-40 h-40 bg-secondary-fixed-dim rounded-full blur-[60px] opacity-20"></div>
+    </div>
+    <div class="relative z-10 text-center px-5 md:px-10">
+        <h1 class="text-4xl md:text-5xl font-bold text-on-surface mb-4 tracking-tight">新品速递</h1>
+        <p class="text-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+            洞察美妆新品趋势，捕捉行业前沿灵感，助力精准高效的产品开发与市场定位。
+        </p>
+    </div>
+</section>
+
+<!-- ========== Filter Section ========== -->
+<section class="max-w-7xl mx-auto px-5 md:px-10 -mt-10 relative z-20">
+    <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-outline-variant/20">
+        <div class="space-y-5">
+            <div class="flex items-start gap-4 md:gap-6 border-b border-outline-variant/10 pb-4">
+                <span class="text-sm font-semibold text-on-surface-variant pt-1.5 whitespace-nowrap">剂型分类</span>
+                <div class="flex flex-wrap gap-2">
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm font-semibold bg-primary text-on-primary transition-all" data-group="type">全部</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="type">防晒</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="type">洁面</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="type">爽肤水</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="type">精华液</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="type">面霜</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="type">眼霜</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="type">面膜</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="type">身体乳</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="type">护手霜</button>
+                </div>
+            </div>
+            <div class="flex items-start gap-4 md:gap-6">
+                <span class="text-sm font-semibold text-on-surface-variant pt-1.5 whitespace-nowrap">功效分类</span>
+                <div class="flex flex-wrap gap-2">
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm font-semibold bg-primary text-on-primary transition-all" data-group="effect">全部</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="effect">保湿</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="effect">美白</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="effect">修护</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="effect">抗衰</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="effect">祛痘</button>
+                    <button class="filter-chip px-4 py-1.5 rounded-full text-sm text-on-surface-variant hover:text-primary hover:bg-primary-fixed/50 transition-all" data-group="effect">控油</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== Product Grid ========== -->
+<section class="max-w-7xl mx-auto px-5 md:px-10 py-16 md:py-20">
+    <div class="masonry-grid">
+
+        <!-- Card 1 -->
+        <div class="masonry-item animate-fade-in-up animate-delay-1" data-product="1">
+            <div class="product-card bg-white rounded-3xl overflow-hidden border border-outline-variant/10 shadow-sm transition-all duration-300 cursor-pointer group">
+                <div class="relative overflow-hidden aspect-[4/5]">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="docs/imgs/微信图片_20260522151722_6287_33.jpg" alt="焕颜多肽抗皱精华"/>
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-primary/90 backdrop-blur-sm text-on-primary text-xs px-3 py-1 rounded-full font-bold">NEW 2024</span>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-6">
+                    <div class="flex gap-2 mb-3">
+                        <span class="px-2.5 py-0.5 bg-bg-soft-lavender text-tertiary text-xs rounded-md font-bold">精华液</span>
+                        <span class="px-2.5 py-0.5 bg-bg-soft-pink text-primary text-xs rounded-md font-bold">抗衰</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-on-surface mb-2 leading-snug">焕颜多肽抗皱精华</h3>
+                    <p class="text-sm text-on-surface-variant leading-relaxed line-clamp-2">复配高浓度类蛇毒肽与玻色因，深层紧致淡纹。质地轻盈如水，一抹吸收，专为亚洲初老肌肤设计。</p>
+                    <div class="mt-4 pt-4 border-t border-outline-variant/10 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-outline">2024-03-15</span>
+                        <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="masonry-item animate-fade-in-up animate-delay-2" data-product="2">
+            <div class="product-card bg-white rounded-3xl overflow-hidden border border-outline-variant/10 shadow-sm transition-all duration-300 cursor-pointer group">
+                <div class="relative overflow-hidden aspect-[3/4]">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="docs/imgs/微信图片_20260522151726_6288_33.jpg" alt="原生水动力保湿修护霜"/>
+                </div>
+                <div class="p-6">
+                    <div class="flex gap-2 mb-3">
+                        <span class="px-2.5 py-0.5 bg-surface-container-high text-on-background text-xs rounded-md font-bold">面霜</span>
+                        <span class="px-2.5 py-0.5 bg-bg-soft-lavender text-tertiary text-xs rounded-md font-bold">保湿</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-on-surface mb-2 leading-snug">原生水动力保湿修护霜</h3>
+                    <p class="text-sm text-on-surface-variant leading-relaxed line-clamp-2">采用微生态护肤理念，添加依克多因与三重神经酰胺，构建肌肤仿生屏障，提供长达72小时的深层水润修护。</p>
+                    <div class="mt-4 pt-4 border-t border-outline-variant/10 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-outline">2024-02-05</span>
+                        <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="masonry-item animate-fade-in-up animate-delay-3" data-product="3">
+            <div class="product-card bg-white rounded-3xl overflow-hidden border border-outline-variant/10 shadow-sm transition-all duration-300 cursor-pointer group">
+                <div class="relative overflow-hidden aspect-[16/10]">
+                    <div class="w-full h-full bg-gradient-to-br from-white to-bg-soft-lavender flex items-center justify-center">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined text-6xl text-primary/30">auto_awesome</span>
+                            <p class="text-sm text-on-surface-variant/50 mt-2">极光精华水</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex gap-2 mb-3">
+                        <span class="px-2.5 py-0.5 bg-bg-soft-lavender text-tertiary text-xs rounded-md font-bold">爽肤水</span>
+                        <span class="px-2.5 py-0.5 bg-bg-soft-pink text-primary text-xs rounded-md font-bold">修护</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-on-surface mb-2 leading-snug">极光焕透精华水</h3>
+                    <p class="text-sm text-on-surface-variant leading-relaxed line-clamp-2">创新微囊包裹技术，封存高活性酵母精粹。触肤即融，加速角质代谢，有效改善暗沉粗糙。</p>
+                    <div class="mt-4 pt-4 border-t border-outline-variant/10 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-outline">2023-09-12</span>
+                        <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="masonry-item animate-fade-in-up animate-delay-1" data-product="4">
+            <div class="product-card bg-white rounded-3xl overflow-hidden border border-outline-variant/10 shadow-sm transition-all duration-300 cursor-pointer group">
+                <div class="relative overflow-hidden aspect-[4/5]">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="docs/imgs/微信图片_20260522151730_6289_33.jpg" alt="光盾修颜抗皱日霜"/>
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-primary/90 backdrop-blur-sm text-on-primary text-xs px-3 py-1 rounded-full font-bold">HOT</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex gap-2 mb-3">
+                        <span class="px-2.5 py-0.5 bg-bg-soft-pink text-primary text-xs rounded-md font-bold">防晒</span>
+                        <span class="px-2.5 py-0.5 bg-bg-soft-lavender text-tertiary text-xs rounded-md font-bold">抗衰</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-on-surface mb-2 leading-snug">光盾修颜抗皱日霜</h3>
+                    <p class="text-sm text-on-surface-variant leading-relaxed line-clamp-2">微米级粒径珍珠粉透出自然光，4D玻尿酸深层补水，胶原蛋白锁固科技硬核阻隔光损伤。</p>
+                    <div class="mt-4 pt-4 border-t border-outline-variant/10 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-outline">2024-04-10</span>
+                        <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="masonry-item animate-fade-in-up animate-delay-2" data-product="5">
+            <div class="product-card bg-white rounded-3xl overflow-hidden border border-outline-variant/10 shadow-sm transition-all duration-300 cursor-pointer group">
+                <div class="relative overflow-hidden aspect-[3/4]">
+                    <div class="w-full h-full bg-gradient-to-br from-bg-soft-lavender via-white to-bg-soft-pink flex items-center justify-center">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined text-6xl text-primary/30">face_retouching_natural</span>
+                            <p class="text-sm text-on-surface-variant/50 mt-2">雪肌焕白面膜</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex gap-2 mb-3">
+                        <span class="px-2.5 py-0.5 bg-bg-soft-pink text-primary text-xs rounded-md font-bold">面膜</span>
+                        <span class="px-2.5 py-0.5 bg-bg-soft-lavender text-tertiary text-xs rounded-md font-bold">美白</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-on-surface mb-2 leading-snug">雪肌焕白透亮面膜</h3>
+                    <p class="text-sm text-on-surface-variant leading-relaxed line-clamp-2">烟酰胺+传明酸双通路抑黑，天丝膜布承载30ml精华液，15分钟唤醒瓷光肌。</p>
+                    <div class="mt-4 pt-4 border-t border-outline-variant/10 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-outline">2024-01-20</span>
+                        <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="masonry-item animate-fade-in-up animate-delay-3" data-product="6">
+            <div class="product-card bg-white rounded-3xl overflow-hidden border border-outline-variant/10 shadow-sm transition-all duration-300 cursor-pointer group">
+                <div class="relative overflow-hidden aspect-[4/5]">
+                    <div class="w-full h-full bg-gradient-to-br from-white to-bg-soft-pink flex items-center justify-center">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined text-6xl text-tertiary/30">spa</span>
+                            <p class="text-sm text-on-surface-variant/50 mt-2">植萃舒润洁面</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-tertiary/90 backdrop-blur-sm text-on-tertiary text-xs px-3 py-1 rounded-full font-bold">NEW 2024</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex gap-2 mb-3">
+                        <span class="px-2.5 py-0.5 bg-surface-container-high text-on-background text-xs rounded-md font-bold">洁面</span>
+                        <span class="px-2.5 py-0.5 bg-bg-soft-lavender text-tertiary text-xs rounded-md font-bold">修护</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-on-surface mb-2 leading-snug">植萃舒润氨基酸洁面乳</h3>
+                    <p class="text-sm text-on-surface-variant leading-relaxed line-clamp-2">三重氨基酸表活复配积雪草精华，温和净卸不紧绷，敏感肌安心之选。</p>
+                    <div class="mt-4 pt-4 border-t border-outline-variant/10 flex justify-between items-center">
+                        <span class="text-xs font-semibold text-outline">2024-05-08</span>
+                        <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+</main>
+
+<!-- ========== Footer ========== -->
+<footer class="bg-white border-t border-outline-variant/20 py-12">
+    <div class="flex flex-col md:flex-row justify-between items-center px-5 md:px-10 max-w-7xl mx-auto gap-6">
+        <div class="flex flex-col gap-2 items-center md:items-start">
+            <span class="text-xl font-bold text-primary">CosmeticLab Insights</span>
+            <p class="text-sm text-on-surface-variant">&copy; 2024 Cosmetic Product Development Manager. All rights reserved.</p>
+        </div>
+        <div class="flex gap-8">
+            <a class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+            <a class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+            <a class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors" href="#">LinkedIn</a>
+            <a class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors" href="#">Behance</a>
+        </div>
+    </div>
+</footer>
+
+<!-- ========== Product Detail Modal ========== -->
+<div class="fixed inset-0 z-[110] hidden bg-black/60 backdrop-blur-sm items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-300" id="product-modal">
+    <div class="bg-white w-full max-w-5xl max-h-[90vh] rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden relative transform scale-95 transition-transform duration-300" id="modal-content">
+
+        <!-- Close Button -->
+        <button class="absolute top-4 right-4 z-20 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full transition-colors backdrop-blur-md" id="close-modal">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+
+        <!-- Left: Image Area -->
+        <div class="w-full md:w-1/2 relative bg-surface-variant min-h-[300px] md:min-h-0 md:h-auto overflow-hidden group">
+            <div class="w-full h-full relative" id="carousel-images">
+                <img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-100" data-index="0" src="docs/imgs/微信图片_20260522151730_6289_33.jpg" alt="光盾修颜日霜"/>
+                <img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-0" data-index="1" src="docs/imgs/微信图片_20260522151722_6287_33.jpg" alt="焕颜多肽精华"/>
+                <img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-0" data-index="2" src="docs/imgs/微信图片_20260522151726_6288_33.jpg" alt="水动力保湿霜"/>
+            </div>
+            <!-- Controls -->
+            <button class="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 hover:bg-white text-on-surface rounded-full backdrop-blur-md shadow-sm transition-all opacity-0 group-hover:opacity-100" id="prev-slide">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <button class="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 hover:bg-white text-on-surface rounded-full backdrop-blur-md shadow-sm transition-all opacity-0 group-hover:opacity-100" id="next-slide">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+            <!-- Dots -->
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="carousel-dots">
+                <button class="w-2.5 h-2.5 rounded-full transition-colors bg-primary" data-dot="0"></button>
+                <button class="w-2.5 h-2.5 rounded-full transition-colors bg-white/60 hover:bg-white" data-dot="1"></button>
+                <button class="w-2.5 h-2.5 rounded-full transition-colors bg-white/60 hover:bg-white" data-dot="2"></button>
+            </div>
+        </div>
+
+        <!-- Right: Product Details -->
+        <div class="w-full md:w-1/2 p-8 md:p-10 overflow-y-auto modal-scroll flex flex-col">
+            <!-- Breadcrumbs -->
+            <nav class="flex text-xs text-on-surface-variant mb-6">
+                <a class="hover:text-primary transition-colors" href="#">新品速递</a>
+                <span class="mx-2">/</span>
+                <span class="text-primary font-medium">光盾修颜日霜</span>
+            </nav>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed text-xs font-bold rounded-full">Anti-aging</span>
+                <span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-xs font-bold rounded-full">Sun Protection</span>
+                <span class="px-3 py-1 bg-surface-container-high text-on-surface-variant text-xs font-bold rounded-full">Moisturizing</span>
+            </div>
+
+            <!-- Title -->
+            <h2 class="text-3xl md:text-4xl font-bold text-on-surface mb-2 leading-tight">光盾修颜抗皱日霜</h2>
+            <p class="text-base text-on-surface-variant mb-6">Light Shield Anti-Wrinkle Sunscreen Cream</p>
+
+            <!-- Specs Glass Card -->
+            <div class="glass-card p-5 rounded-2xl mb-6">
+                <div class="flex justify-between items-center border-b border-data-border pb-3 mb-3">
+                    <span class="text-xs font-semibold text-on-surface-variant">净含量</span>
+                    <span class="text-sm font-semibold text-on-surface">30g</span>
+                </div>
+                <div class="flex justify-between items-center border-b border-data-border pb-3 mb-3">
+                    <span class="text-xs font-semibold text-on-surface-variant">品类</span>
+                    <span class="text-sm text-on-surface">防晒 / 抗衰</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-semibold text-on-surface-variant">发布日期</span>
+                    <span class="text-sm text-on-surface">Q3 2024</span>
+                </div>
+            </div>
+
+            <!-- Key Innovations -->
+            <h3 class="text-lg font-semibold text-on-surface mb-3">核心创新</h3>
+            <ul class="flex flex-col gap-3 mb-6">
+                <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-primary mt-0.5 text-xl">verified</span>
+                    <div>
+                        <p class="text-sm font-semibold text-on-surface">微米级珍珠粉</p>
+                        <p class="text-xs text-on-surface-variant">反射自然光，柔焦妆效不假白</p>
+                    </div>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-primary mt-0.5 text-xl">water_drop</span>
+                    <div>
+                        <p class="text-sm font-semibold text-on-surface">4D玻尿酸</p>
+                        <p class="text-xs text-on-surface-variant">深层锁水，全天水润不紧绷</p>
+                    </div>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-primary mt-0.5 text-xl">shield</span>
+                    <div>
+                        <p class="text-sm font-semibold text-on-surface">胶原蛋白锁固科技</p>
+                        <p class="text-xs text-on-surface-variant">高阶UV防护+抗老肽复合配方</p>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- Description -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-on-surface mb-2">研发笔记</h3>
+                <p class="text-sm text-on-surface-variant leading-relaxed">
+                    告别防晒枷锁，轻松拥有不易变黑好肤质。采用微米级粒径珍珠粉，透出自然光。不假白浮夸，为您提供专属防护管家。硬核阻隔光损伤，深层补水，全天水润不紧绷。
+                </p>
+            </div>
+
+            <!-- Actions -->
+            <div class="mt-auto pt-5 border-t border-data-border flex flex-col sm:flex-row gap-3">
+                <button class="flex-1 bg-primary text-on-primary rounded-full px-6 py-3.5 text-sm font-semibold shadow-sm hover:shadow-md transition-all active:scale-95 flex items-center justify-center gap-2">
+                    <span>索取样品</span>
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </button>
+                <button class="flex-none bg-white text-primary border border-primary/20 rounded-full px-6 py-3.5 text-sm font-semibold hover:bg-primary-fixed transition-colors active:scale-95 flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-sm">mail</span>
+                    <span>联系经理</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== Floating FAB ========== -->
+<div class="fixed bottom-8 right-8 flex flex-col items-end gap-3 z-[100]">
+    <!-- Message Box -->
+    <div class="bg-primary text-on-primary px-5 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 transition-all duration-300" id="msg-box">
+        <span class="text-sm font-semibold">请您留言</span>
+        <span class="material-symbols-outlined text-base">chat</span>
+    </div>
+    <!-- FAB -->
+    <div class="flex flex-col items-center gap-2 group cursor-pointer relative">
+        <div class="relative w-16 h-16 floating-fab pulse-ring">
+            <div class="absolute inset-0 bg-primary rounded-full blur-xl opacity-30 animate-pulse"></div>
+            <div class="relative w-full h-full rounded-full border-4 border-white shadow-xl overflow-hidden bg-white ring-4 ring-primary/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl text-primary">support_agent</span>
+            </div>
+            <div class="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+        </div>
+        <div class="bg-primary px-4 py-1.5 rounded-xl text-on-primary font-bold shadow-lg text-xs">
+            在线咨询
+        </div>
+    </div>
+</div>
+
+<!-- ========== Scripts ========== -->
+<script>
+    // === Filter Chips ===
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', function() {
+            const group = this.dataset.group;
+            document.querySelectorAll(`.filter-chip[data-group="${group}"]`).forEach(c => {
+                c.classList.remove('bg-primary', 'text-on-primary');
+                c.classList.add('text-on-surface-variant');
+            });
+            this.classList.add('bg-primary', 'text-on-primary');
+            this.classList.remove('text-on-surface-variant');
+        });
+    });
+
+    // === Product Modal ===
+    const modal = document.getElementById('product-modal');
+    const modalContent = document.getElementById('modal-content');
+    const closeModalBtn = document.getElementById('close-modal');
+    const productCards = document.querySelectorAll('.masonry-item');
+
+    function openModal() {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        requestAnimationFrame(() => {
+            modal.classList.remove('opacity-0');
+            modalContent.classList.remove('scale-95');
+        });
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.add('opacity-0');
+        modalContent.classList.add('scale-95');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }, 300);
+    }
+
+    productCards.forEach(card => card.addEventListener('click', openModal));
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+    // === Carousel ===
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('#carousel-images > img');
+    const dots = document.querySelectorAll('#carousel-dots button');
+    const totalSlides = slides.length;
+
+    function updateSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('opacity-100', i === index);
+            slide.classList.toggle('opacity-0', i !== index);
+            dots[i].classList.toggle('bg-primary', i === index);
+            dots[i].classList.toggle('bg-white/60', i !== index);
+        });
+        currentSlide = index;
+    }
+
+    document.getElementById('prev-slide').addEventListener('click', () => {
+        updateSlide((currentSlide - 1 + totalSlides) % totalSlides);
+    });
+    document.getElementById('next-slide').addEventListener('click', () => {
+        updateSlide((currentSlide + 1) % totalSlides);
+    });
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => updateSlide(index));
+    });
+
+    // === Keyboard ===
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('hidden')) {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') updateSlide((currentSlide - 1 + totalSlides) % totalSlides);
+            if (e.key === 'ArrowRight') updateSlide((currentSlide + 1) % totalSlides);
+        }
+    });
+</script>
+</body>
+</html>
