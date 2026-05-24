@@ -33,7 +33,7 @@
 
 ### 环境要求
 
-- Python 3.12+
+- Python 3.11+
 - Node.js 20+
 - PostgreSQL 16（开发可用 Docker 替代）
 
