@@ -18,6 +18,15 @@
 | Auth | JWT (PyJWT) |
 | Deployment | Docker Compose (single-server, Tencent Cloud) |
 
+### Database Migrations
+- Use **Flask-Migrate** (Alembic) for schema versioning
+- Migration commands run via `flask db upgrade` in entrypoint.sh on container start
+
+### Initial Admin Bootstrap
+- Flask CLI command: `flask create-admin --username admin --email admin@example.com --password <password>`
+- Run as part of first-time setup via entrypoint.sh if no admin exists
+- Creates a user with `role=admin` and `is_approved=true`, bypassing the approval flow
+
 ### Deployment Model (Single Container)
 
 Production deployment uses a **multi-stage Docker build**:
@@ -181,6 +190,7 @@ skincare-home/
 | POST | `/register` | None | User registration |
 | POST | `/login` | None | Returns JWT access_token |
 | GET | `/me` | JWT | Current user profile |
+| PUT | `/password` | JWT | Change current user's password (old_password + new_password) |
 
 ### Users (`/api/users`)
 | Method | Endpoint | Auth | Description |
@@ -194,12 +204,44 @@ skincare-home/
 ### Products (`/api/products`)
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| GET | `/` | None | List products (public); query params: search, form_type_id, effect_type_id, function_type_id |
+| GET | `/` | None | List products (public); query params below |
 | GET | `/:id` | None | Product detail (public) |
 | POST | `/` | Admin | Create product |
 | PUT | `/:id` | Admin | Update product |
-| DELETE | `/:id` | Admin | Delete product |
+| DELETE | `/:id` | Admin | Delete product (also removes image file) |
 | POST | `/:id/image` | Admin | Upload product image (multipart) |
+| DELETE | `/:id/image` | Admin | Remove product image |
+
+#### Product List Query Params
+| Param | Type | Description |
+|-------|------|-------------|
+| `search` | string | Fuzzy match on name, description, ingredients |
+| `form_type_id` | UUID | Filter by form type (single) |
+| `effect_type_id` | UUID | Filter by effect type (single) |
+| `function_type_id` | UUID | Filter by function type (single) |
+| `page` | int | Page number, default 1 |
+| `per_page` | int | Items per page, default 20, max 100 |
+| `sort_by` | string | Field to sort: `published_at` (default), `name`, `created_at` |
+| `sort_order` | string | `desc` (default) or `asc` |
+
+#### Standard Response Format
+```json
+// List response
+{
+  "items": [...],
+  "total": 100,
+  "page": 1,
+  "per_page": 20,
+  "pages": 5
+}
+
+// Single item / error
+{
+  "data": {...}        // or null on error
+  "message": "...",    // user-readable message
+  "errors": {...}      // validation errors, optional
+}
+```
 
 ### Tags (`/api/tags`)
 | Method | Endpoint | Auth | Description |
@@ -276,14 +318,22 @@ skincare-home/
 ## 6. Image Upload
 
 - Upload endpoint: `POST /api/products/:id/image`
+- Delete endpoint: `DELETE /api/products/:id/image` — removes image file and clears product.image field
 - Server stores to Docker volume path `/app/uploads/`
 - Flask serves `/uploads/*` as static files
 - Frontend: El-upload component with preview, max 1 image per product
 - Allowed types: jpg, png, webp
+- **Cleanup:** When a product is deleted, its associated image file is also removed from disk
+- Filename convention: `{product_id}_{timestamp}.{ext}` to avoid collisions
 
 ---
 
 ## 7. Docker Deployment
+
+### `entrypoint.sh`
+- Runs `flask db upgrade` (apply pending migrations)
+- Runs `flask create-admin` if no admin exists (idempotent)
+- Starts Gunicorn: `exec gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()"`
 
 ### `docker-compose.yml`
 ```yaml
@@ -313,6 +363,18 @@ services:
 volumes:
   pgdata:
   uploads:
+```
+
+### Environment Variables
+```bash
+# .env.example
+DATABASE_URL=postgresql://app:password@postgres:5432/skincare
+SECRET_KEY=change-me-to-a-random-secret
+JWT_EXPIRATION_HOURS=24
+UPLOAD_FOLDER=/app/uploads
+MAX_CONTENT_LENGTH=5242880   # 5MB max upload
+FLASK_ENV=production
+FLASK_DEBUG=0
 ```
 
 ### `Dockerfile` (Multi-stage)
