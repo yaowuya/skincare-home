@@ -7,6 +7,6 @@ echo "PostgreSQL ready."
 
 flask db upgrade
 flask seed-tags
-flask create-admin --username admin --email admin@example.com --password admin123 2>/dev/null || true
+flask create-admin --username "${ADMIN_USERNAME:-admin}" --email "${ADMIN_EMAIL:-admin@example.com}" --password "${ADMIN_PASSWORD:?ADMIN_PASSWORD not set in .env}" 2>/dev/null || true
 
 exec gunicorn -w 4 -b 0.0.0.0:5000 wsgi:app

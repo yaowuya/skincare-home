@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ./venv/Scripts/pip install -r requirements.txt
 
 # Run dev server
-./venv/Scripts/flask --app "app:create_app()" run --reload
+./venv/Scripts/python main.py
 
 # Run all tests (uses SQLite in-memory, no PG needed)
 ./venv/Scripts/python -m pytest tests/ -v
