@@ -1,7 +1,9 @@
 from flask_restx import Namespace, Resource, fields
+from pydantic import ValidationError
 from app import db
-from app.models.user import User
+from app.models.user import User, RoleEnum
 from app.auth.decorators import admin_required
+from app.api.schemas import UserCreateSchema, UserUpdateSchema, ApproveSchema
 
 users_ns = Namespace("users", description="用户管理（管理员）")
 
@@ -9,7 +11,7 @@ user_model = users_ns.model("User", {
     "username": fields.String(required=True),
     "email": fields.String(required=True),
     "password": fields.String(required=False, description="留空则不修改"),
-    "role": fields.String(default="user"),
+    "role": fields.String(default="user", enum=["admin", "user"]),
     "is_approved": fields.Boolean(default=False),
 })
 
@@ -40,17 +42,21 @@ class UserList(Resource):
         @admin_required
         def inner():
             data = users_ns.payload
+            try:
+                schema = UserCreateSchema(**data)
+            except ValidationError as e:
+                users_ns.abort(400, e.errors())
             if User.query.filter(
-                (User.username == data["username"]) | (User.email == data["email"])
+                (User.username == schema.username) | (User.email == schema.email)
             ).first():
                 users_ns.abort(409, "Username or email already exists")
             user = User(
-                username=data["username"],
-                email=data["email"],
-                role=data.get("role", "user"),
-                is_approved=data.get("is_approved", False),
+                username=schema.username,
+                email=schema.email,
+                role=schema.role,
+                is_approved=schema.is_approved,
             )
-            user.set_password(data["password"])
+            user.set_password(schema.password)
             db.session.add(user)
             db.session.commit()
             return user.to_dict(), 201
@@ -66,14 +72,18 @@ class UserDetail(Resource):
         def inner():
             user = User.query.get_or_404(id)
             data = users_ns.payload
-            if "username" in data:
-                user.username = data["username"]
-            if "email" in data:
-                user.email = data["email"]
-            if "role" in data:
-                user.role = data["role"]
-            if "password" in data and data["password"]:
-                user.set_password(data["password"])
+            try:
+                schema = UserUpdateSchema(**data)
+            except ValidationError as e:
+                users_ns.abort(400, e.errors())
+            if schema.username is not None:
+                user.username = schema.username
+            if schema.email is not None:
+                user.email = schema.email
+            if schema.role is not None:
+                user.role = schema.role
+            if schema.password is not None and schema.password:
+                user.set_password(schema.password)
             db.session.commit()
             return user.to_dict()
         return inner()
@@ -99,7 +109,12 @@ class UserApprove(Resource):
         @admin_required
         def inner():
             user = User.query.get_or_404(id)
-            user.is_approved = users_ns.payload["approved"]
+            data = users_ns.payload
+            try:
+                schema = ApproveSchema(**data)
+            except ValidationError as e:
+                users_ns.abort(400, e.errors())
+            user.is_approved = schema.approved
             db.session.commit()
             return user.to_dict()
         return inner()

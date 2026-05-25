@@ -32,11 +32,11 @@ def client(app):
 @pytest.fixture(scope="function")
 def auth_headers(client, db):
     """Create an approved admin user and return auth header dict."""
-    from app.models.user import User
+    from app.models.user import User, RoleEnum
     # Ensure clean state - check if admin exists first
     user = User.query.filter_by(username="admin").first()
     if not user:
-        user = User(username="admin", email="admin@test.com", role="admin", is_approved=True)
+        user = User(username="admin", email="admin@test.com", role=RoleEnum.admin, is_approved=True)
         user.set_password("admin123")
         db.session.add(user)
         db.session.commit()
@@ -51,10 +51,10 @@ def auth_headers(client, db):
 @pytest.fixture(scope="function")
 def user_headers(client, db):
     """Create an approved regular user and return auth header dict."""
-    from app.models.user import User
+    from app.models.user import User, RoleEnum
     user = User.query.filter_by(username="user").first()
     if not user:
-        user = User(username="user", email="user@test.com", role="user", is_approved=True)
+        user = User(username="user", email="user@test.com", role=RoleEnum.user, is_approved=True)
         user.set_password("user123")
         db.session.add(user)
         db.session.commit()

@@ -2,7 +2,7 @@ import jwt
 import datetime
 from functools import wraps
 from flask import request, g, current_app
-from app.models.user import User
+from app.models.user import User, RoleEnum
 
 
 def generate_token(user_id, secret=None, expiration_hours=None):
@@ -51,7 +51,7 @@ def admin_required(f):
     @wraps(f)
     @jwt_required
     def decorated(*args, **kwargs):
-        if g.current_user.role != "admin":
+        if g.current_user.role != RoleEnum.admin:
             from flask_restx import abort
             abort(403, message="Admin access required")
         return f(*args, **kwargs)

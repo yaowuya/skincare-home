@@ -1,11 +1,11 @@
 import pytest
-from app.models.user import User
+from app.models.user import User, RoleEnum
 
 
 class TestListUsers:
     def test_list_users_admin(self, client, db, auth_headers):
         """Admin can list users."""
-        u = User(username="user1", email="u1@test.com", role="user", is_approved=True)
+        u = User(username="user1", email="u1@test.com", role=RoleEnum.user, is_approved=True)
         u.set_password("x")
         db.session.add(u)
         db.session.commit()
@@ -20,7 +20,7 @@ class TestListUsers:
 
     def test_list_users_filter_approved(self, client, db, auth_headers):
         """Filter by approved status."""
-        u = User(username="pending_u", email="p@test.com", role="user", is_approved=False)
+        u = User(username="pending_u", email="p@test.com", role=RoleEnum.user, is_approved=False)
         u.set_password("x")
         db.session.add(u)
         db.session.commit()
@@ -60,7 +60,7 @@ class TestCreateUser:
 
     def test_create_user_duplicate(self, client, db, auth_headers):
         """Duplicate username returns 409."""
-        u = User(username="existing", email="ex@test.com", role="user", is_approved=True)
+        u = User(username="existing", email="ex@test.com", role=RoleEnum.user, is_approved=True)
         u.set_password("x")
         db.session.add(u)
         db.session.commit()
@@ -68,15 +68,25 @@ class TestCreateUser:
         resp = client.post("/api/users/", headers=auth_headers, json={
             "username": "existing",
             "email": "other@test.com",
-            "password": "x",
+            "password": "pass123",
         })
         assert resp.status_code == 409
+
+    def test_create_user_invalid_role(self, client, db, auth_headers):
+        """Invalid role returns 400."""
+        resp = client.post("/api/users/", headers=auth_headers, json={
+            "username": "hacker",
+            "email": "hacker@test.com",
+            "password": "pass123",
+            "role": "superadmin",
+        })
+        assert resp.status_code == 400
 
 
 class TestUpdateUser:
     def test_update_user_success(self, client, db, auth_headers):
         """Admin updates user fields."""
-        u = User(username="oldname", email="old@test.com", role="user", is_approved=True)
+        u = User(username="oldname", email="old@test.com", role=RoleEnum.user, is_approved=True)
         u.set_password("x")
         db.session.add(u)
         db.session.commit()
@@ -92,7 +102,7 @@ class TestUpdateUser:
 
 class TestDeleteUser:
     def test_delete_user_success(self, client, db, auth_headers):
-        u = User(username="goner", email="gone@test.com", role="user", is_approved=True)
+        u = User(username="goner", email="gone@test.com", role=RoleEnum.user, is_approved=True)
         u.set_password("x")
         db.session.add(u)
         db.session.commit()
@@ -111,7 +121,7 @@ class TestDeleteUser:
 
 class TestApproveUser:
     def test_approve_user(self, client, db, auth_headers):
-        u = User(username="pending", email="pend@test.com", role="user", is_approved=False)
+        u = User(username="pending", email="pend@test.com", role=RoleEnum.user, is_approved=False)
         u.set_password("x")
         db.session.add(u)
         db.session.commit()
@@ -123,7 +133,7 @@ class TestApproveUser:
         assert resp.get_json()["is_approved"] is True
 
     def test_reject_user(self, client, db, auth_headers):
-        u = User(username="pending2", email="pend2@test.com", role="user", is_approved=True)
+        u = User(username="pending2", email="pend2@test.com", role=RoleEnum.user, is_approved=True)
         u.set_password("x")
         db.session.add(u)
         db.session.commit()

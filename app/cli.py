@@ -1,7 +1,7 @@
 import click
 from flask import current_app
 from app import db
-from app.models.user import User
+from app.models.user import User, RoleEnum
 from app.models.product import FunctionType
 
 
@@ -16,17 +16,17 @@ def register_commands(app):
             (User.username == username) | (User.email == email)
         ).first()
         if existing:
-            if existing.role == "admin":
+            if existing.role == RoleEnum.admin:
                 click.echo(f"Admin '{username}' already exists.")
                 return
-            existing.role = "admin"
+            existing.role = RoleEnum.admin
             existing.is_approved = True
             click.echo(f"User '{username}' upgraded to admin.")
         else:
             user = User(
                 username=username,
                 email=email,
-                role="admin",
+                role=RoleEnum.admin,
                 is_approved=True,
             )
             user.set_password(password)

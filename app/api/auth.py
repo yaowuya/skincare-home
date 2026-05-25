@@ -1,7 +1,7 @@
 from flask import g
 from flask_restx import Namespace, Resource, fields
 from app import db
-from app.models.user import User
+from app.models.user import User, RoleEnum
 from app.auth.decorators import generate_token, jwt_required
 
 auth_ns = Namespace("auth", description="认证管理")
@@ -51,7 +51,7 @@ class Register(Resource):
         user = User(
             username=data["username"],
             email=data["email"],
-            role="user",
+            role=RoleEnum.user,
             is_approved=False,
         )
         user.set_password(data["password"])
