@@ -1,6 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app import db
-from app.models.product import FormType, EffectType, FunctionType
+from app.models.product import Tag, TagType
 from app.auth.decorators import admin_required
 
 tags_ns = Namespace("tags", description="标签管理")
@@ -9,26 +9,20 @@ tag_model = tags_ns.model("Tag", {
     "name": fields.String(required=True),
 })
 
-TYPE_MAP = {
-    "form": (FormType, "form_types"),
-    "effect": (EffectType, "effect_types"),
-    "function": (FunctionType, "function_types"),
-}
 
-
-def get_model(tag_type):
-    model_cls, _ = TYPE_MAP.get(tag_type, (None, None))
-    if not model_cls:
-        tags_ns.abort(400, f"Invalid type: {tag_type}. Use form/effect/function")
-    return model_cls
+def get_tag_type(tag_type_str):
+    try:
+        return TagType(tag_type_str)
+    except ValueError:
+        tags_ns.abort(400, f"Invalid type: {tag_type_str}. Use form/effect/function")
 
 
 @tags_ns.route("/<string:tag_type>")
 class TagList(Resource):
     def get(self, tag_type):
         """获取标签列表（公开）"""
-        model_cls = get_model(tag_type)
-        return [t.to_dict() for t in model_cls.query.order_by(model_cls.name).all()]
+        t = get_tag_type(tag_type)
+        return [t.to_dict() for t in Tag.query.filter(Tag.type == t).order_by(Tag.name).all()]
 
     @tags_ns.doc(security="Bearer")
     @tags_ns.expect(tag_model, validate=True)
@@ -36,13 +30,13 @@ class TagList(Resource):
         """创建标签（管理员）"""
         @admin_required
         def inner():
-            model_cls = get_model(tag_type)
+            t = get_tag_type(tag_type)
             name = tags_ns.payload["name"].strip()
             if not name:
                 tags_ns.abort(400, "Tag name cannot be empty")
-            if model_cls.query.filter_by(name=name).first():
+            if Tag.query.filter_by(name=name, type=t).first():
                 tags_ns.abort(409, f"Tag '{name}' already exists")
-            tag = model_cls(name=name)
+            tag = Tag(name=name, type=t)
             db.session.add(tag)
             db.session.commit()
             return tag.to_dict(), 201
@@ -57,14 +51,12 @@ class TagDetail(Resource):
         """编辑标签（管理员）"""
         @admin_required
         def inner():
-            model_cls = get_model(tag_type)
-            tag = model_cls.query.get_or_404(id)
+            t = get_tag_type(tag_type)
+            tag = Tag.query.filter(Tag.id == id, Tag.type == t).first_or_404()
             name = tags_ns.payload["name"].strip()
             if not name:
                 tags_ns.abort(400, "Tag name cannot be empty")
-            existing = model_cls.query.filter(
-                model_cls.name == name, model_cls.id != id
-            ).first()
+            existing = Tag.query.filter(Tag.name == name, Tag.type == t, Tag.id != id).first()
             if existing:
                 tags_ns.abort(409, f"Tag '{name}' already exists")
             tag.name = name
@@ -77,8 +69,8 @@ class TagDetail(Resource):
         """删除标签（管理员）"""
         @admin_required
         def inner():
-            model_cls = get_model(tag_type)
-            tag = model_cls.query.get_or_404(id)
+            t = get_tag_type(tag_type)
+            tag = Tag.query.filter(Tag.id == id, Tag.type == t).first_or_404()
             db.session.delete(tag)
             db.session.commit()
             return {"message": "Tag deleted"}

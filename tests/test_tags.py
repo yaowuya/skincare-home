@@ -1,12 +1,12 @@
 import pytest
+from app.models.product import Tag, TagType
 
 
 class TestListTags:
     def test_list_form_tags(self, client, db, auth_headers):
         """List form type tags."""
-        from app.models.product import FormType
-        db.session.add(FormType(name="防晒"))
-        db.session.add(FormType(name="洁面"))
+        db.session.add(Tag(name="防晒", type=TagType.form))
+        db.session.add(Tag(name="洁面", type=TagType.form))
         db.session.commit()
 
         resp = client.get("/api/tags/form")
@@ -26,9 +26,8 @@ class TestListTags:
         assert resp.status_code == 400
 
     def test_list_effect_and_function_types(self, client, db):
-        from app.models.product import EffectType, FunctionType
-        db.session.add(EffectType(name="保湿"))
-        db.session.add(FunctionType(name="院线套装"))
+        db.session.add(Tag(name="保湿", type=TagType.effect))
+        db.session.add(Tag(name="院线套装", type=TagType.function))
         db.session.commit()
 
         effect_resp = client.get("/api/tags/effect")
@@ -45,8 +44,7 @@ class TestCreateTag:
         assert resp.get_json()["name"] == "精华液"
 
     def test_create_tag_duplicate(self, client, db, auth_headers):
-        from app.models.product import FormType
-        db.session.add(FormType(name="精华液"))
+        db.session.add(Tag(name="精华液", type=TagType.form))
         db.session.commit()
 
         resp = client.post("/api/tags/form", headers=auth_headers, json={"name": "精华液"})
@@ -59,8 +57,7 @@ class TestCreateTag:
 
 class TestUpdateTag:
     def test_update_tag(self, client, db, auth_headers):
-        from app.models.product import FormType
-        t = FormType(name="旧名")
+        t = Tag(name="旧名", type=TagType.form)
         db.session.add(t)
         db.session.commit()
 
@@ -71,8 +68,7 @@ class TestUpdateTag:
 
 class TestDeleteTag:
     def test_delete_tag(self, client, db, auth_headers):
-        from app.models.product import EffectType
-        t = EffectType(name="保湿")
+        t = Tag(name="保湿", type=TagType.effect)
         db.session.add(t)
         db.session.commit()
         tid = t.id
@@ -80,4 +76,4 @@ class TestDeleteTag:
         resp = client.delete(f"/api/tags/effect/{tid}", headers=auth_headers)
         assert resp.status_code == 200
 
-        assert EffectType.query.get(tid) is None
+        assert Tag.query.get(tid) is None

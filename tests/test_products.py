@@ -56,8 +56,8 @@ class TestListProducts:
         assert resp.get_json()["total"] == 1
 
     def test_filter_by_form_type(self, client, db, auth_headers):
-        from app.models.product import FormType
-        ft = FormType(name="精华液")
+        from app.models.product import Tag, TagType
+        ft = Tag(name="精华液", type=TagType.form)
         db.session.add(ft)
         db.session.commit()
 

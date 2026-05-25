@@ -79,7 +79,7 @@ Flask + Flask-RESTx layered structure:
 app/
 ├── api/            # Flask-RESTx namespaces (auth, users, products, tags)
 ├── auth/           # JWT decorators (jwt_required, admin_required)
-├── models/         # SQLAlchemy models (User, Product, FormType, EffectType, FunctionType)
+├── models/         # SQLAlchemy models (User, Product, Tag)
 ├── utils/          # upload.py (file upload/delete helpers)
 ├── cli.py          # Flask CLI commands (create-admin, seed-tags)
 └── __init__.py     # App factory, DB init, API setup, SPA fallback routes

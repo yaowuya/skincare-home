@@ -4,7 +4,7 @@ from flask import request, g
 from flask_restx import Namespace, Resource, fields
 from werkzeug.datastructures import FileStorage
 from app import db
-from app.models.product import Product, FormType, EffectType, FunctionType
+from app.models.product import Product, Tag, TagType
 from app.auth.decorators import admin_required
 from app.utils.upload import save_image, delete_image
 
@@ -41,23 +41,29 @@ upload_parser.add_argument(
 def apply_tag_ids(product, data):
     """Helper to set tag relationships from ID lists."""
     if "form_tag_ids" in data:
-        product.form_tags = (
-            FormType.query.filter(FormType.id.in_(data["form_tag_ids"])).all()
-            if data["form_tag_ids"]
-            else []
-        )
+        product.tags = [t for t in product.tags if t.type != TagType.form]
+        if data["form_tag_ids"]:
+            product.tags.extend(
+                Tag.query.filter(
+                    Tag.id.in_(data["form_tag_ids"]), Tag.type == TagType.form
+                ).all()
+            )
     if "effect_tag_ids" in data:
-        product.effect_tags = (
-            EffectType.query.filter(EffectType.id.in_(data["effect_tag_ids"])).all()
-            if data["effect_tag_ids"]
-            else []
-        )
+        product.tags = [t for t in product.tags if t.type != TagType.effect]
+        if data["effect_tag_ids"]:
+            product.tags.extend(
+                Tag.query.filter(
+                    Tag.id.in_(data["effect_tag_ids"]), Tag.type == TagType.effect
+                ).all()
+            )
     if "function_tag_ids" in data:
-        product.function_tags = (
-            FunctionType.query.filter(FunctionType.id.in_(data["function_tag_ids"])).all()
-            if data["function_tag_ids"]
-            else []
-        )
+        product.tags = [t for t in product.tags if t.type != TagType.function]
+        if data["function_tag_ids"]:
+            product.tags.extend(
+                Tag.query.filter(
+                    Tag.id.in_(data["function_tag_ids"]), Tag.type == TagType.function
+                ).all()
+            )
 
 
 @products_ns.route("/")
@@ -81,16 +87,20 @@ class ProductList(Resource):
         # Filter by tag
         form_type_id = request.args.get("form_type_id")
         if form_type_id:
-            query = query.filter(Product.form_tags.any(FormType.id == form_type_id))
+            query = query.filter(
+                Product.tags.any(db.and_(Tag.id == form_type_id, Tag.type == TagType.form))
+            )
 
         effect_type_id = request.args.get("effect_type_id")
         if effect_type_id:
-            query = query.filter(Product.effect_tags.any(EffectType.id == effect_type_id))
+            query = query.filter(
+                Product.tags.any(db.and_(Tag.id == effect_type_id, Tag.type == TagType.effect))
+            )
 
         function_type_id = request.args.get("function_type_id")
         if function_type_id:
             query = query.filter(
-                Product.function_tags.any(FunctionType.id == function_type_id)
+                Product.tags.any(db.and_(Tag.id == function_type_id, Tag.type == TagType.function))
             )
 
         # Sort
