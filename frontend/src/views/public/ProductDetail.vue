@@ -2,8 +2,20 @@
   <div class="product-detail" v-if="product">
     <div class="detail-layout">
       <div class="detail-image">
-        <img v-if="product.image_url" :src="product.image_url" :alt="product.name" />
+        <img v-if="coverImage" :src="coverImage" :alt="product.name" />
         <div v-else class="no-image">暂无图片</div>
+        <div v-if="galleryImages.length > 1" class="image-thumbs">
+          <button
+            v-for="image in galleryImages"
+            :key="image.id || image.url"
+            class="thumb-btn"
+            :class="{ active: image.url === coverImage }"
+            type="button"
+            @click="coverImage = image.url"
+          >
+            <img :src="image.url" :alt="product.name" />
+          </button>
+        </div>
       </div>
       <div class="detail-info">
         <h2 class="detail-name">{{ product.name }}</h2>
@@ -36,9 +48,22 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed, ref, watch } from 'vue'
+
+const props = defineProps({
   product: { type: Object, default: null },
 })
+
+const coverImage = ref('')
+const galleryImages = computed(() => props.product?.images || [])
+
+watch(
+  () => props.product,
+  (product) => {
+    coverImage.value = product?.images?.[0]?.url || product?.image_url || product?.image || ''
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped>
@@ -53,6 +78,30 @@ defineProps({
   width: 100%;
   border-radius: 8px;
   object-fit: cover;
+}
+.image-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.thumb-btn {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+}
+.thumb-btn.active {
+  border-color: #1a56a8;
+}
+.thumb-btn img {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  display: block;
 }
 .no-image {
   width: 320px;

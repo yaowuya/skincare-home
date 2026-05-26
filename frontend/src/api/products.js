@@ -11,4 +11,5 @@ export const productsApi = {
     return api.post(`/products/${id}/image`, fd)
   },
   deleteImage: (id) => api.delete(`/products/${id}/image`),
+  deleteSingleImage: (id, imageId) => api.delete(`/products/${id}/images/${imageId}`),
 }

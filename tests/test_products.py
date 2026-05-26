@@ -136,19 +136,59 @@ class TestProductDetail:
 
 
 class TestProductImage:
-    def test_upload_image(self, client, db, auth_headers):
+    def test_upload_multiple_images_appends(self, client, db, auth_headers):
         prod = _create_test_product(client, auth_headers)
         prod_id = prod["id"]
 
-        data = {"image": (io.BytesIO(b"fake-image-data"), "test.png")}
-        resp = client.post(
+        first = client.post(
             f"/api/products/{prod_id}/image",
             headers=auth_headers,
             content_type="multipart/form-data",
-            data=data,
+            data={"image": (io.BytesIO(b"first-image-data"), "first.png")},
         )
-        # May fail due to flask-restx parser validation, but endpoint should be callable
-        assert resp.status_code in (200, 400)
+        second = client.post(
+            f"/api/products/{prod_id}/image",
+            headers=auth_headers,
+            content_type="multipart/form-data",
+            data={"image": (io.BytesIO(b"second-image-data"), "second.png")},
+        )
+
+        assert first.status_code == 200
+        assert second.status_code == 200
+
+        detail = client.get(f"/api/products/{prod_id}")
+        data = detail.get_json()
+        assert len(data["images"]) == 2
+        assert data["image"] == data["images"][0]["url"]
+        assert data["images"][0]["sort_order"] == 0
+        assert data["images"][1]["sort_order"] == 1
+
+    def test_delete_single_image(self, client, db, auth_headers):
+        prod = _create_test_product(client, auth_headers)
+        prod_id = prod["id"]
+
+        client.post(
+            f"/api/products/{prod_id}/image",
+            headers=auth_headers,
+            content_type="multipart/form-data",
+            data={"image": (io.BytesIO(b"first-image-data"), "first.png")},
+        )
+        second = client.post(
+            f"/api/products/{prod_id}/image",
+            headers=auth_headers,
+            content_type="multipart/form-data",
+            data={"image": (io.BytesIO(b"second-image-data"), "second.png")},
+        ).get_json()
+
+        resp = client.delete(
+            f"/api/products/{prod_id}/images/{second['id']}",
+            headers=auth_headers,
+        )
+
+        assert resp.status_code == 200
+        detail = client.get(f"/api/products/{prod_id}").get_json()
+        assert len(detail["images"]) == 1
+        assert detail["images"][0]["id"] != second["id"]
 
     def test_delete_image_no_auth(self, client, db):
         import uuid

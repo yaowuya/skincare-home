@@ -40,7 +40,7 @@
           </el-select>
         </el-form-item>
         <el-form-item v-if="isEdit" label="产品图片">
-          <ImageUpload :product-id="productId" :current-image="currentImage" @change="onImageChange" />
+          <ImageUpload :product-id="productId" :current-images="currentImages" @change="onImagesChange" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSubmit" :loading="submitting">保 存</el-button>
@@ -65,7 +65,7 @@ const tagsStore = useTagsStore()
 const formRef = ref(null)
 const loading = ref(false)
 const submitting = ref(false)
-const currentImage = ref('')
+const currentImages = ref([])
 
 const productId = computed(() => route.params.id)
 const isEdit = computed(() => !!productId.value)
@@ -84,8 +84,8 @@ const rules = {
   name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
 }
 
-function onImageChange(url) {
-  currentImage.value = url
+function onImagesChange(images) {
+  currentImages.value = images
 }
 
 async function loadProduct() {
@@ -101,7 +101,7 @@ async function loadProduct() {
     form.form_type_ids = (p.form_tags || []).map((t) => t.id)
     form.effect_type_ids = (p.effect_tags || []).map((t) => t.id)
     form.function_type_ids = (p.function_tags || []).map((t) => t.id)
-    currentImage.value = p.image_url || ''
+    currentImages.value = p.images || []
   } finally {
     loading.value = false
   }

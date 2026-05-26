@@ -4,7 +4,7 @@ from flask import request, g
 from flask_restx import Namespace, Resource, fields
 from werkzeug.datastructures import FileStorage
 from app import db
-from app.models.product import Product, Tag, TagType
+from app.models.product import Product, ProductImage as ProductImageModel, Tag, TagType
 from app.auth.decorators import admin_required
 from app.utils.upload import save_image, delete_image
 
@@ -180,7 +180,10 @@ class ProductDetail(Resource):
         @admin_required
         def inner():
             product = Product.query.get_or_404(id)
-            delete_image(product.image)
+            for image in product.images:
+                delete_image(image.url)
+            if product.image and not product.images:
+                delete_image(product.image)
             db.session.delete(product)
             db.session.commit()
             return {"message": "Product deleted"}
@@ -188,7 +191,7 @@ class ProductDetail(Resource):
 
 
 @products_ns.route("/<string:id>/image")
-class ProductImage(Resource):
+class ProductImageResource(Resource):
     @products_ns.doc(security="Bearer")
     @products_ns.expect(upload_parser)
     def post(self, id):
@@ -199,14 +202,17 @@ class ProductImage(Resource):
             args = upload_parser.parse_args()
             file = args["image"]
 
-            # Delete old image if exists
-            if product.image:
-                delete_image(product.image)
-
             image_url = save_image(file, str(product.id))
-            product.image = image_url
+            image = ProductImageModel(
+                product=product,
+                url=image_url,
+                sort_order=len(product.images),
+            )
+            db.session.add(image)
+            if not product.image:
+                product.image = image_url
             db.session.commit()
-            return {"image": image_url}
+            return image.to_dict()
         return inner()
 
     @products_ns.doc(security="Bearer")
@@ -215,9 +221,38 @@ class ProductImage(Resource):
         @admin_required
         def inner():
             product = Product.query.get_or_404(id)
+            for image in product.images:
+                delete_image(image.url)
             if product.image:
                 delete_image(product.image)
-                product.image = ""
-                db.session.commit()
+            product.images = []
+            product.image = ""
+            db.session.commit()
+            return {"message": "Images deleted"}
+        return inner()
+
+
+@products_ns.route("/<string:id>/images/<string:image_id>")
+class ProductSingleImage(Resource):
+    @products_ns.doc(security="Bearer")
+    def delete(self, id, image_id):
+        """删除单张产品图片"""
+        @admin_required
+        def inner():
+            product = Product.query.get_or_404(id)
+            image = ProductImageModel.query.filter_by(id=image_id, product_id=product.id).first_or_404()
+            delete_image(image.url)
+            db.session.delete(image)
+            db.session.flush()
+
+            remaining = (
+                ProductImageModel.query.filter_by(product_id=product.id)
+                .order_by(ProductImageModel.sort_order)
+                .all()
+            )
+            for index, remaining_image in enumerate(remaining):
+                remaining_image.sort_order = index
+            product.image = remaining[0].url if remaining else ""
+            db.session.commit()
             return {"message": "Image deleted"}
         return inner()

@@ -51,17 +51,28 @@ class Product(db.Model):
 
     # relationships
     tags = db.relationship("Tag", secondary=product_tags, lazy="selectin")
+    images = db.relationship(
+        "ProductImage",
+        back_populates="product",
+        cascade="all, delete-orphan",
+        order_by="ProductImage.sort_order",
+        lazy="selectin",
+    )
 
     def to_dict(self):
         form_tags = [t.to_dict() for t in self.tags if t.type == TagType.form]
         effect_tags = [t.to_dict() for t in self.tags if t.type == TagType.effect]
         function_tags = [t.to_dict() for t in self.tags if t.type == TagType.function]
+        images = [image.to_dict() for image in self.images]
+        cover_image = images[0]["url"] if images else self.image
         return {
             "id": str(self.id),
             "name": self.name,
             "description": self.description,
             "ingredients": self.ingredients,
-            "image": self.image,
+            "image": cover_image,
+            "image_url": cover_image,
+            "images": images,
             "published_at": self.published_at.isoformat() if self.published_at else None,
             "form_tags": form_tags,
             "effect_tags": effect_tags,
@@ -69,4 +80,31 @@ class Product(db.Model):
             "created_by": str(self.created_by) if self.created_by else None,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+        }
+
+
+class ProductImage(db.Model):
+    __tablename__ = "product_images"
+
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    product_id = db.Column(
+        db.String(36),
+        db.ForeignKey("products.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    url = db.Column(db.String(300), nullable=False)
+    sort_order = db.Column(db.Integer, nullable=False, default=0)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
+    product = db.relationship("Product", back_populates="images")
+
+    def to_dict(self):
+        return {
+            "id": str(self.id),
+            "url": self.url,
+            "image": self.url,
+            "image_url": self.url,
+            "sort_order": self.sort_order,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
         }
