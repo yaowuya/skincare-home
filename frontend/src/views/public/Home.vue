@@ -350,15 +350,16 @@ onMounted(() => {
   background: rgba(0, 51, 102, 0.08);
 }
 .product-grid {
-  columns: 4 260px;
-  column-gap: 28px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px;
   margin-top: 44px;
 }
 .product-card {
   position: relative;
-  display: inline-block;
+  display: block;
   width: 100%;
-  margin: 0 0 22px;
+  margin: 0;
   overflow: hidden;
   border: 1px solid rgba(195, 198, 209, 0.5);
   border-radius: 16px;
@@ -366,7 +367,6 @@ onMounted(() => {
   box-shadow: 0 12px 28px rgba(0, 51, 102, 0.06);
   cursor: pointer;
   transition: transform 0.28s ease, box-shadow 0.28s ease;
-  break-inside: avoid;
 }
 .product-card:hover {
   transform: translateY(-4px);
@@ -513,6 +513,22 @@ onMounted(() => {
   .filter-summary {
     align-items: flex-start;
     flex-direction: column;
+  }
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1080px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 </style>

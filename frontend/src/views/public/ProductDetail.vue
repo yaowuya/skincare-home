@@ -50,12 +50,30 @@
               :src="coverImage"
               :preview-src-list="previewSrcList"
               :initial-index="currentImageIndex"
-              fit="cover"
+              fit="contain"
               class="hero-preview-image"
             />
             <div v-else class="no-image">
               <el-icon :size="48"><Picture /></el-icon>
             </div>
+            <button
+              v-if="galleryImages.length > 1"
+              class="hero-nav prev"
+              type="button"
+              aria-label="上一张"
+              @click.stop="prevImage"
+            >
+              <el-icon><ArrowLeft /></el-icon>
+            </button>
+            <button
+              v-if="galleryImages.length > 1"
+              class="hero-nav next"
+              type="button"
+              aria-label="下一张"
+              @click.stop="nextImage"
+            >
+              <el-icon><ArrowRight /></el-icon>
+            </button>
           </div>
           <div class="thumb-row">
             <button
@@ -182,6 +200,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
+  ArrowLeft,
   ArrowRight,
   Calendar,
   ChatDotRound,
@@ -262,6 +281,18 @@ function selectImage(index) {
   if (index < 0 || index >= galleryImages.value.length) return
   currentImageIndex.value = index
   coverImage.value = galleryImages.value[index].url
+}
+
+function prevImage() {
+  if (!galleryImages.value.length) return
+  const prevIndex = (currentImageIndex.value - 1 + galleryImages.value.length) % galleryImages.value.length
+  selectImage(prevIndex)
+}
+
+function nextImage() {
+  if (!galleryImages.value.length) return
+  const nextIndex = (currentImageIndex.value + 1) % galleryImages.value.length
+  selectImage(nextIndex)
 }
 
 function stopCarousel() {
@@ -452,8 +483,10 @@ onBeforeUnmount(stopCarousel)
 /* ===== Gallery ===== */
 .gallery-col {
   min-width: 0;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 16px;
+  align-items: stretch;
 }
 
 .hero-image {
@@ -461,11 +494,15 @@ onBeforeUnmount(stopCarousel)
   overflow: hidden;
   border-radius: 16px;
   border: 1px solid rgba(195, 198, 209, 0.2);
-  background: #fff;
+  background: transparent;
   box-shadow: 0 8px 32px rgba(0, 51, 102, 0.04);
   width: 100%;
-  aspect-ratio: 4 / 5;
-  max-height: clamp(420px, 52vh, 680px);
+  height: clamp(680px, 74vh, 980px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .hero-preview-image {
@@ -478,12 +515,12 @@ onBeforeUnmount(stopCarousel)
 :deep(.hero-preview-image .el-image__inner) {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.7s ease;
+  object-fit: contain;
+  object-position: center;
 }
 
-.hero-image:hover :deep(.hero-preview-image .el-image__inner) {
-  transform: scale(1.05);
+:deep(.hero-preview-image .el-image__wrapper) {
+  background: transparent;
 }
 
 .no-image {
@@ -496,14 +533,20 @@ onBeforeUnmount(stopCarousel)
 }
 
 .thumb-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 12px;
-  margin-top: 16px;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 4px;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: stretch;
 }
 
 .thumb {
-  aspect-ratio: 1;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 12px;
   border: 2px solid transparent;
@@ -539,6 +582,43 @@ onBeforeUnmount(stopCarousel)
   place-items: center;
   color: #737780;
   background: #edeeef;
+}
+
+.hero-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(195, 198, 209, 0.5);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1f2937;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.hero-nav.prev {
+  left: 14px;
+}
+
+.hero-nav.next {
+  right: 14px;
+}
+
+.hero-image:hover .hero-nav {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-nav:hover {
+  border-color: rgba(0, 51, 102, 0.35);
+  background: #ffffff;
 }
 
 /* ===== Info Column ===== */
@@ -804,25 +884,36 @@ onBeforeUnmount(stopCarousel)
   color: #737780;
 }
 
-@media (min-width: 1600px) {
-  .hero-image {
-    max-height: clamp(520px, 60vh, 860px);
-  }
-}
-
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
   .split-layout {
     grid-template-columns: 1fr;
   }
 
-  .hero-image {
-    max-height: none;
+  .gallery-col {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
-  :deep(.hero-preview-image .el-image__inner) {
-    aspect-ratio: 16 / 9;
+  .thumb-row {
+    order: 2;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    grid-column: auto;
+    grid-row: auto;
     height: auto;
+    padding-right: 0;
+  }
+
+  .thumb {
+    flex: 0 0 84px;
+  }
+
+  .hero-image {
+    height: clamp(420px, 62vh, 760px);
+    grid-column: auto;
+    grid-row: auto;
   }
 
   .info-col {
@@ -855,10 +946,6 @@ onBeforeUnmount(stopCarousel)
 
   .split-layout {
     gap: 32px;
-  }
-
-  .thumb-row {
-    grid-template-columns: repeat(4, 1fr);
   }
 
   .detail-footer {
