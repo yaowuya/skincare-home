@@ -203,7 +203,7 @@ onMounted(() => {
 }
 .top-nav {
   position: fixed;
-  top: 18px;
+  top: 14px;
   left: 0;
   right: 0;
   z-index: 20;
@@ -213,17 +213,17 @@ onMounted(() => {
 }
 .nav-shell {
   width: min(1280px, calc(100% - 32px));
-  height: 64px;
+  height: 60px;
   display: grid;
   grid-template-columns: 44px 1fr 44px;
   align-items: center;
-  gap: 12px;
-  padding: 6px 10px;
-  border: 1px solid rgba(195, 198, 209, 0.5);
+  gap: 10px;
+  padding: 5px 10px;
+  border: 1px solid rgba(195, 198, 209, 0.42);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.86);
-  box-shadow: 0 12px 32px rgba(0, 51, 102, 0.08);
-  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 8px 20px rgba(0, 51, 102, 0.05);
+  backdrop-filter: blur(12px);
 }
 .nav-links {
   display: flex;
@@ -232,21 +232,21 @@ onMounted(() => {
   overflow-x: auto;
 }
 .nav-link {
-  height: 46px;
-  padding: 0 28px;
+  height: 42px;
+  padding: 0 24px;
   border: 0;
   border-radius: 999px;
   background: transparent;
   color: #43474f;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
 }
 .nav-link.active {
   background: #fff;
   color: #001e40;
-  box-shadow: 0 8px 24px rgba(0, 51, 102, 0.08);
+  box-shadow: 0 6px 14px rgba(0, 51, 102, 0.07);
 }
 .avatar-btn {
   width: 38px;
@@ -262,13 +262,13 @@ onMounted(() => {
 .content-area {
   width: min(1280px, calc(100% - 32px));
   margin: 0 auto;
-  padding-top: 104px;
+  padding-top: 98px;
   padding-bottom: 64px;
 }
 .filter-panel {
   position: relative;
   z-index: 3;
-  padding: 30px 34px;
+  padding: 28px 32px;
   border: 1px solid rgba(195, 198, 209, 0.5);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.86);
@@ -277,9 +277,9 @@ onMounted(() => {
 }
 .filter-row {
   display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 18px;
-  padding: 14px 0;
+  grid-template-columns: 128px 1fr;
+  gap: 16px;
+  padding: 12px 0;
   border-bottom: 1px solid rgba(195, 198, 209, 0.32);
 }
 .filter-row:last-of-type {
@@ -291,24 +291,26 @@ onMounted(() => {
   justify-content: center;
   gap: 8px;
   text-align: center;
-  color: #43474f;
+  color: #4b5563;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
+  letter-spacing: 0;
 }
 .chip-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 .filter-chip {
-  min-width: 74px;
-  height: 42px;
-  padding: 0 22px;
+  min-width: 68px;
+  height: 38px;
+  padding: 0 18px;
   border: 1px solid rgba(115, 119, 128, 0.34);
   border-radius: 999px;
   background: #fff;
   color: #43474f;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.18s ease;
 }
@@ -320,16 +322,16 @@ onMounted(() => {
   border-color: #003366;
   background: #003366;
   color: #fff;
-  box-shadow: 0 10px 20px rgba(0, 51, 102, 0.16);
+  box-shadow: 0 6px 14px rgba(0, 51, 102, 0.14);
 }
 .filter-summary {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  margin-top: 18px;
+  margin-top: 14px;
   color: #737780;
-  font-size: 13px;
+  font-size: 12px;
 }
 .filter-summary button {
   width: 34px;
@@ -350,13 +352,13 @@ onMounted(() => {
 .product-grid {
   columns: 4 260px;
   column-gap: 28px;
-  margin-top: 52px;
+  margin-top: 44px;
 }
 .product-card {
   position: relative;
   display: inline-block;
   width: 100%;
-  margin: 0 0 28px;
+  margin: 0 0 22px;
   overflow: hidden;
   border: 1px solid rgba(195, 198, 209, 0.5);
   border-radius: 16px;
@@ -384,7 +386,7 @@ onMounted(() => {
 }
 .product-image {
   position: relative;
-  aspect-ratio: 0.86;
+  aspect-ratio: 0.95;
   overflow: hidden;
   background: #e7e8e9;
 }
@@ -405,13 +407,13 @@ onMounted(() => {
   color: #737780;
 }
 .card-body {
-  padding: 20px 22px 22px;
+  padding: 16px 18px 18px;
 }
 .tag-row {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 .tag {
   padding: 4px 9px;
@@ -427,19 +429,19 @@ onMounted(() => {
   color: #003366;
 }
 .card-body h2 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: #191c1d;
-  font-size: 22px;
-  line-height: 1.28;
+  font-size: 20px;
+  line-height: 1.25;
 }
 .card-body p {
   display: -webkit-box;
-  min-height: 52px;
+  min-height: 44px;
   margin: 0;
   overflow: hidden;
   color: #43474f;
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.6;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
@@ -447,8 +449,8 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 22px;
-  padding-top: 18px;
+  margin-top: 16px;
+  padding-top: 14px;
   border-top: 1px solid rgba(195, 198, 209, 0.35);
 }
 .card-footer span {
@@ -456,11 +458,11 @@ onMounted(() => {
   align-items: center;
   gap: 7px;
   color: #737780;
-  font-size: 13px;
+  font-size: 12px;
 }
 .arrow {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   justify-content: center;
   border-radius: 999px;
   background: #f3f4f5;
