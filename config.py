@@ -15,7 +15,12 @@ class Config:
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER", os.path.join(os.getcwd(), "uploads"))
+    _project_root = os.path.dirname(os.path.abspath(__file__))
+    _raw_upload_folder = os.environ.get("UPLOAD_FOLDER", "uploads")
+    if os.path.isabs(_raw_upload_folder):
+        UPLOAD_FOLDER = _raw_upload_folder
+    else:
+        UPLOAD_FOLDER = os.path.abspath(os.path.join(_project_root, _raw_upload_folder))
     MAX_CONTENT_LENGTH = int(os.environ.get("MAX_CONTENT_LENGTH", 5 * 1024 * 1024))  # 5MB
 
     JWT_SECRET = os.environ.get("JWT_SECRET", SECRET_KEY)

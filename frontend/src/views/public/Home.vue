@@ -24,19 +24,10 @@
       </nav>
     </header>
 
-    <section class="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-copy">
-        <h1>新品速递</h1>
-        <p>探索我们最新的化妆品配方和创新的活性成分，以临床精度设计，专为专业应用而开发。</p>
-      </div>
-    </section>
-
     <main class="content-area">
       <section class="filter-panel">
         <div v-for="group in filterGroups" :key="group.key" class="filter-row">
           <div class="filter-label">
-            <component :is="group.icon" :size="18" />
             <span>{{ group.label }}</span>
           </div>
           <div class="chip-list">
@@ -62,10 +53,6 @@
         </div>
         <div class="filter-summary">
           <span>显示 {{ total }} 个符合您标准的商品。</span>
-          <button type="button">
-            <el-icon><Filter /></el-icon>
-            高级筛选
-          </button>
         </div>
       </section>
 
@@ -225,16 +212,16 @@ onMounted(() => {
   padding: 0 16px;
 }
 .nav-shell {
-  width: min(1120px, 100%);
+  width: min(1280px, calc(100% - 32px));
   height: 64px;
   display: grid;
   grid-template-columns: 44px 1fr 44px;
   align-items: center;
   gap: 12px;
   padding: 6px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(195, 198, 209, 0.5);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.86);
   box-shadow: 0 12px 32px rgba(0, 51, 102, 0.08);
   backdrop-filter: blur(18px);
 }
@@ -272,43 +259,10 @@ onMounted(() => {
   color: #003366;
   cursor: pointer;
 }
-.hero {
-  position: relative;
-  min-height: 360px;
-  display: grid;
-  place-items: center;
-  padding: 112px 20px 72px;
-  overflow: hidden;
-}
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 28%, rgba(213, 227, 255, 0.58), transparent 26%),
-    radial-gradient(circle at 82% 70%, rgba(177, 213, 254, 0.38), transparent 30%),
-    linear-gradient(135deg, rgba(213, 227, 255, 0.26), rgba(248, 249, 250, 0.94));
-}
-.hero-copy {
-  position: relative;
-  max-width: 760px;
-  text-align: center;
-}
-.hero-copy h1 {
-  margin: 0 0 18px;
-  font-size: 48px;
-  line-height: 1.1;
-  color: #191c1d;
-  font-weight: 800;
-}
-.hero-copy p {
-  margin: 0;
-  color: #43474f;
-  font-size: 18px;
-  line-height: 1.75;
-}
 .content-area {
   width: min(1280px, calc(100% - 32px));
-  margin: -28px auto 0;
+  margin: 0 auto;
+  padding-top: 104px;
   padding-bottom: 64px;
 }
 .filter-panel {
@@ -334,9 +288,12 @@ onMounted(() => {
 .filter-label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
   color: #43474f;
   font-weight: 700;
+  font-size: 14px;
 }
 .chip-list {
   display: flex;
@@ -375,14 +332,20 @@ onMounted(() => {
   font-size: 13px;
 }
 .filter-summary button {
+  width: 34px;
+  height: 34px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  border-radius: 999px;
   border: 0;
   background: transparent;
   color: #003366;
   font-weight: 700;
   cursor: pointer;
+}
+.filter-summary button:hover {
+  background: rgba(0, 51, 102, 0.08);
 }
 .product-grid {
   columns: 4 260px;
@@ -421,7 +384,7 @@ onMounted(() => {
 }
 .product-image {
   position: relative;
-  aspect-ratio: 0.7;
+  aspect-ratio: 0.86;
   overflow: hidden;
   background: #e7e8e9;
 }
@@ -537,9 +500,6 @@ onMounted(() => {
   }
   .nav-link {
     padding: 0 16px;
-  }
-  .hero-copy h1 {
-    font-size: 34px;
   }
   .filter-panel {
     padding: 20px;

@@ -35,10 +35,29 @@ const props = defineProps({
 })
 const emit = defineEmits(['change'])
 
+function normalizeUrl(rawUrl) {
+  if (!rawUrl) return ''
+  if (/^https?:\/\//i.test(rawUrl)) return rawUrl
+  return rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`
+}
+
+function normalizeImage(item) {
+  if (!item) return null
+  const url = normalizeUrl(item.url || item.image_url || item.image || '')
+  return {
+    ...item,
+    __hasRealId: Boolean(item.id),
+    id: item.id || url,
+    url,
+  }
+}
+
 const images = computed(() => {
-  if (props.currentImages.length) return props.currentImages
+  if (props.currentImages.length) {
+    return props.currentImages.map(normalizeImage).filter((img) => img?.url)
+  }
   if (!props.currentImage) return []
-  return [{ id: props.currentImage, url: props.currentImage }]
+  return [{ id: props.currentImage, url: normalizeUrl(props.currentImage), __hasRealId: false }]
 })
 
 function beforeUpload(file) {
@@ -57,7 +76,12 @@ function beforeUpload(file) {
 async function handleUpload({ file }) {
   try {
     const res = await productsApi.uploadImage(props.productId, file)
-    emit('change', [...images.value, res.data])
+    const uploaded = normalizeImage(res?.data)
+    if (!uploaded?.url) {
+      ElMessage.error('上传成功但未返回图片地址')
+      return
+    }
+    emit('change', [...images.value, uploaded])
     ElMessage.success('上传成功')
   } catch (err) {
     ElMessage.error(err.response?.data?.error || '上传失败')
@@ -66,7 +90,7 @@ async function handleUpload({ file }) {
 
 async function handleDelete(image) {
   try {
-    if (image.id && image.id !== image.url) {
+    if (image.__hasRealId) {
       await productsApi.deleteSingleImage(props.productId, image.id)
       emit('change', images.value.filter((item) => item.id !== image.id))
     } else {

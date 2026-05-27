@@ -35,7 +35,7 @@
       <nav class="crumbs">
         <router-link to="/">首页</router-link>
         <el-icon><ArrowRight /></el-icon>
-        <router-link to="/">配方库</router-link>
+        <router-link to="/">新品速递</router-link>
         <el-icon><ArrowRight /></el-icon>
         <span class="crumbs-current">{{ detailProduct.name }}</span>
       </nav>
@@ -43,9 +43,16 @@
       <!-- Split Layout -->
       <div class="split-layout">
         <!-- Left: Gallery (7 cols) -->
-        <div class="gallery-col">
+        <div class="gallery-col" @mouseenter="isGalleryHovered = true" @mouseleave="isGalleryHovered = false">
           <div class="hero-image">
-            <img v-if="coverImage" :src="coverImage" :alt="detailProduct.name" />
+            <el-image
+              v-if="coverImage"
+              :src="coverImage"
+              :preview-src-list="previewSrcList"
+              :initial-index="currentImageIndex"
+              fit="cover"
+              class="hero-preview-image"
+            />
             <div v-else class="no-image">
               <el-icon :size="48"><Picture /></el-icon>
             </div>
@@ -55,9 +62,9 @@
               v-for="(image, idx) in galleryImages"
               :key="image.id || image.url"
               class="thumb"
-              :class="{ active: image.url === coverImage }"
+              :class="{ active: idx === currentImageIndex }"
               type="button"
-              @click="coverImage = image.url"
+              @click="selectImage(idx)"
             >
               <img :src="image.url" :alt="`${detailProduct.name} ${idx + 1}`" />
             </button>
@@ -172,7 +179,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   ArrowRight,
@@ -200,6 +207,9 @@ const authStore = useAuthStore()
 const loading = ref(false)
 const fetchedProduct = ref(null)
 const coverImage = ref('')
+const currentImageIndex = ref(0)
+const isGalleryHovered = ref(false)
+let carouselTimer = null
 
 const detailProduct = computed(() => props.product || fetchedProduct.value)
 
@@ -210,6 +220,8 @@ const galleryImages = computed(() => {
   const url = product.image_url || product.image
   return url ? [{ id: url, url }] : []
 })
+
+const previewSrcList = computed(() => galleryImages.value.map((image) => image.url).filter(Boolean))
 
 const ingredientItems = computed(() => {
   const ingredients = detailProduct.value?.ingredients || ''
@@ -246,15 +258,51 @@ function handleUserCommand(command) {
   }
 }
 
+function selectImage(index) {
+  if (index < 0 || index >= galleryImages.value.length) return
+  currentImageIndex.value = index
+  coverImage.value = galleryImages.value[index].url
+}
+
+function stopCarousel() {
+  if (carouselTimer) {
+    clearInterval(carouselTimer)
+    carouselTimer = null
+  }
+}
+
+function startCarousel() {
+  stopCarousel()
+  if (galleryImages.value.length <= 1) return
+  carouselTimer = setInterval(() => {
+    if (isGalleryHovered.value) return
+    const nextIndex = (currentImageIndex.value + 1) % galleryImages.value.length
+    selectImage(nextIndex)
+  }, 3500)
+}
+
 watch(
-  detailProduct,
-  (product) => {
-    coverImage.value = product?.images?.[0]?.url || product?.image_url || product?.image || ''
+  galleryImages,
+  (images) => {
+    if (!images.length) {
+      currentImageIndex.value = 0
+      coverImage.value = ''
+      stopCarousel()
+      return
+    }
+    const matchedIndex = images.findIndex((image) => image.url === coverImage.value)
+    if (matchedIndex >= 0) {
+      currentImageIndex.value = matchedIndex
+    } else {
+      selectImage(0)
+    }
+    startCarousel()
   },
   { immediate: true }
 )
 
 onMounted(loadProduct)
+onBeforeUnmount(stopCarousel)
 </script>
 
 <style scoped>
@@ -337,7 +385,7 @@ onMounted(loadProduct)
   max-width: 1280px;
   margin: 0 auto;
   width: 100%;
-  padding: 104px 64px 64px;
+  padding: 70px 64px 64px;
 }
 
 /* ===== Breadcrumbs ===== */
@@ -398,8 +446,7 @@ onMounted(loadProduct)
   display: grid;
   grid-template-columns: 7fr 5fr;
   gap: 48px;
-  align-items: stretch;
-  max-height: 700px;
+  align-items: start;
 }
 
 /* ===== Gallery ===== */
@@ -416,19 +463,26 @@ onMounted(loadProduct)
   border: 1px solid rgba(195, 198, 209, 0.2);
   background: #fff;
   box-shadow: 0 8px 32px rgba(0, 51, 102, 0.04);
-  flex: 1;
-  min-height: 0;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: clamp(420px, 52vh, 680px);
 }
 
-.hero-image img {
+.hero-preview-image {
   width: 100%;
   height: 100%;
   display: block;
+  cursor: zoom-in;
+}
+
+:deep(.hero-preview-image .el-image__inner) {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   transition: transform 0.7s ease;
 }
 
-.hero-image:hover img {
+.hero-image:hover :deep(.hero-preview-image .el-image__inner) {
   transform: scale(1.05);
 }
 
@@ -493,7 +547,7 @@ onMounted(loadProduct)
   display: flex;
   flex-direction: column;
   gap: 24px;
-  overflow-y: auto;
+  overflow: visible;
 }
 
 /* Info Card */
@@ -750,22 +804,23 @@ onMounted(loadProduct)
   color: #737780;
 }
 
+@media (min-width: 1600px) {
+  .hero-image {
+    max-height: clamp(520px, 60vh, 860px);
+  }
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
   .split-layout {
     grid-template-columns: 1fr;
-    max-height: none;
-  }
-
-  .gallery-col {
-    max-height: none;
   }
 
   .hero-image {
-    flex: 0 0 auto;
+    max-height: none;
   }
 
-  .hero-image img {
+  :deep(.hero-preview-image .el-image__inner) {
     aspect-ratio: 16 / 9;
     height: auto;
   }

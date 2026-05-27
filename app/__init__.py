@@ -10,7 +10,7 @@ migrate = Migrate()
 
 
 def create_app(config_object=None):
-    app = Flask(__name__, static_folder="static", static_url_path="")
+    app = Flask(__name__, static_folder="static", static_url_path="/static")
 
     if config_object:
         app.config.from_object(config_object)
