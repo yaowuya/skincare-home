@@ -1,8 +1,8 @@
 import api from './index'
 export const productsApi = {
-  list: (params) => api.get('/products', { params }),
+  list: (params) => api.get('/products/', { params }),
   get: (id) => api.get(`/products/${id}`),
-  create: (data) => api.post('/products', data),
+  create: (data) => api.post('/products/', data),
   update: (id, data) => api.put(`/products/${id}`, data),
   delete: (id) => api.delete(`/products/${id}`),
   uploadImage: (id, file) => {

@@ -16,6 +16,11 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.setItem('user', JSON.stringify(res.data.user))
   }
 
+  async function register(payload) {
+    const api = (await import('../api')).default
+    return api.post('/auth/register', payload)
+  }
+
   function logout() {
     token.value = ''
     user.value = null
@@ -23,5 +28,5 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('user')
   }
 
-  return { token, user, isLoggedIn, isAdmin, login, logout }
+  return { token, user, isLoggedIn, isAdmin, login, register, logout }
 })

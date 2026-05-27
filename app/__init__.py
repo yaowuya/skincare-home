@@ -32,6 +32,14 @@ def create_app(config_object=None):
         prefix="/api",
         title="Skincare Product API",
         description="化妆品产品管理平台 API",
+        authorizations={
+            "Bearer": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization",
+                "description": 'JWT token, format: "Bearer {token}"',
+            }
+        },
         default="auth",
         default_label="认证相关",
     )

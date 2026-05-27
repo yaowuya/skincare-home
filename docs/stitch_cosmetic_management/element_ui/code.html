@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Product - Cosmetic Pro Manager</title>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#e7e8e9",
+                      "tertiary": "#171f24",
+                      "surface-tint": "#3a5f94",
+                      "inverse-primary": "#a7c8ff",
+                      "on-primary": "#ffffff",
+                      "surface-dim": "#d9dadb",
+                      "secondary-fixed-dim": "#a6caf2",
+                      "on-primary-container": "#799dd6",
+                      "secondary-fixed": "#cfe4ff",
+                      "secondary": "#3e6184",
+                      "on-secondary-fixed-variant": "#24496b",
+                      "outline": "#737780",
+                      "surface-container-highest": "#e1e3e4",
+                      "on-secondary": "#ffffff",
+                      "on-surface-variant": "#43474f",
+                      "on-primary-fixed-variant": "#1f477b",
+                      "on-tertiary-container": "#949ca3",
+                      "inverse-surface": "#2e3132",
+                      "tertiary-container": "#2c3439",
+                      "surface-container-low": "#f3f4f5",
+                      "on-tertiary": "#ffffff",
+                      "on-background": "#191c1d",
+                      "primary-fixed-dim": "#a7c8ff",
+                      "on-error": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-secondary-container": "#395c7f",
+                      "surface-bright": "#f8f9fa",
+                      "tertiary-fixed-dim": "#bfc8ce",
+                      "surface-container": "#edeeef",
+                      "outline-variant": "#c3c6d1",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed": "#d5e3ff",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#dbe3ea",
+                      "on-secondary-fixed": "#001d34",
+                      "surface": "#f8f9fa",
+                      "background": "#f8f9fa",
+                      "on-tertiary-fixed-variant": "#40484d",
+                      "on-surface": "#191c1d",
+                      "on-primary-fixed": "#001b3c",
+                      "inverse-on-surface": "#f0f1f2",
+                      "primary-container": "#003366",
+                      "on-tertiary-fixed": "#151d22",
+                      "secondary-container": "#b1d5fe",
+                      "surface-variant": "#e1e3e4",
+                      "primary": "#001e40"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "margin-desktop": "64px",
+                      "unit": "4px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "label-md": ["Plus Jakarta Sans"],
+                      "headline-xl": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .fill-icon { font-variation-settings: 'FILL' 1; }
+        
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background: rgba(248, 249, 250, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row">
+<!-- Shared Component: SideNavBar (Hidden on Mobile) -->
+<nav class="hidden md:flex flex-col h-full w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-tertiary-container border-r border-outline-variant/20 p-4 gap-2 z-40 pt-20">
+<div class="mb-8 px-4">
+<h1 class="font-headline-md text-headline-md text-primary">Rhine Cosmetics</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Product Management</p>
+</div>
+<button class="bg-primary text-on-primary w-full py-3 rounded-lg font-label-md mb-6 hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">add</span>
+            New Product
+        </button>
+<div class="flex-1 flex flex-col gap-1">
+<!-- Active State: Catalog -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Catalog</span>
+</a>
+<!-- Inactive States -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg hover:bg-primary/5 transition-all cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined">science</span>
+<span class="font-label-md text-label-md">Formulations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg hover:bg-primary/5 transition-all cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-label-md text-label-md">Compliance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg hover:bg-primary/5 transition-all cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined">conveyor_belt</span>
+<span class="font-label-md text-label-md">Suppliers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg hover:bg-primary/5 transition-all cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined">archive</span>
+<span class="font-label-md text-label-md">Archived</span>
+</a>
+</div>
+<div class="mt-auto border-t border-outline-variant/20 pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg hover:bg-primary/5 transition-all cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg hover:bg-primary/5 transition-all cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area Wrapper -->
+<div class="flex-1 flex flex-col w-full md:pl-64">
+<!-- Shared Component: TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/90 dark:bg-surface-dim/90 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_16px_32px_rgba(0,51,102,0.08)]">
+<div class="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto md:ml-64 w-auto">
+<div class="flex items-center gap-8">
+<h2 class="font-headline-md text-headline-md text-primary dark:text-inverse-primary tracking-tight hidden md:block">Cosmetic Pro Manager</h2>
+<h2 class="font-headline-md text-headline-md text-primary tracking-tight md:hidden">CPM</h2>
+<nav class="hidden lg:flex gap-6 items-center pt-1">
+<a class="text-on-surface-variant dark:text-surface-variant font-medium hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 active:scale-95 transition-transform font-body-md text-body-md" href="#">Dashboard</a>
+<!-- Active State: Products -->
+<a class="text-primary dark:text-inverse-primary border-b-2 border-primary font-bold pb-1 active:scale-95 transition-transform font-body-md text-body-md" href="#">Products</a>
+<a class="text-on-surface-variant dark:text-surface-variant font-medium hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 active:scale-95 transition-transform font-body-md text-body-md" href="#">Inventory</a>
+<a class="text-on-surface-variant dark:text-surface-variant font-medium hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 active:scale-95 transition-transform font-body-md text-body-md" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 text-primary dark:text-inverse-primary">
+<button class="hover:bg-primary/5 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-primary/5 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/30">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A professional headshot of a person with a neutral background, used as a user profile avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXDadfwjL1T5qD-wYh4la1z2L1YqpcXIQG2C9xBZqB4O-x6xe_g2-1y9QOKvavUn4hN3z6Rz4vbL0TEwXEvY5b4mbpX0PTa5WjSbasKH_k35Q8I0Nnx_tRB3-EPVu-gBWGyyfh_pNAojsWf-n7pTqOX_MMp4f_9XklYyIHWnnxkOkaPMLkS6A1go7PHVYG_EUNWbbiashGDwclL3y8eC_zU6mieQs_NYJTLy690JzC1suFPkhRN-W_krFuLUBOE6kn6L7ydecR58F9"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-margin-mobile md:p-margin-desktop pt-24 max-w-container-max mx-auto w-full"><div class="fixed inset-0 bg-on-background/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8"><div class="bg-surface-container-lowest w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-xl shadow-2xl flex flex-col"><div class="px-8 py-6 border-b border-outline-variant/30 flex justify-between items-center"><div><h1 class="text-headline-md font-headline-md text-on-surface">新增产品</h1><p class="text-label-sm text-on-surface-variant mt-1">请填写以下信息以注册新化妆品产品。确保所有强制性技术规格准确无误。</p></div><button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">close</span></button></div><div class="px-12 py-8 bg-surface-container-low/30"><div class="flex items-center justify-between w-full max-w-2xl mx-auto mb-8"><div class="flex flex-col items-center gap-2 flex-1 relative"><div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold z-10">1</div><span class="text-label-md font-label-md text-primary">产品信息</span><div class="absolute top-4 left-[60%] w-full h-[2px] bg-outline-variant/50"></div></div><div class="flex flex-col items-center gap-2 flex-1"><div class="w-8 h-8 rounded-full border-2 border-outline-variant text-on-surface-variant flex items-center justify-center font-bold">2</div><span class="text-label-md font-label-md text-on-surface-variant">媒体资源</span></div></div></div><div class="flex-1 overflow-y-auto p-8 md:p-12"><div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6" id="step-1-content"><div class="md:col-span-2"><label class="font-label-md text-label-md text-on-surface block mb-2">产品名称 *</label><input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="例如：莱茵高级补水精华液" type="text"/></div><div><label class="font-label-md text-label-md text-on-surface block mb-2">剂型 *</label><div class="relative"><select class="w-full appearance-none bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 pr-10 font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"><option disabled="" selected="" value="">请选择剂型</option><option>喷雾</option><option>乳液</option><option>面霜</option><option>精华</option><option>凝胶</option></select><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span></div></div><div><label class="font-label-md text-label-md text-on-surface block mb-2">预计发布日期</label><input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="date"/></div><div class="md:col-span-2"><label class="font-label-md text-label-md text-on-surface block mb-3">功效说明</label><div class="flex flex-wrap gap-3"><label class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 cursor-pointer hover:border-primary transition-colors"><input class="w-4 h-4 text-primary border-outline rounded" type="checkbox"/><span>保湿</span></label><label class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 cursor-pointer hover:border-primary transition-colors"><input class="w-4 h-4 text-primary border-outline rounded" type="checkbox"/><span>美白</span></label><label class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 cursor-pointer hover:border-primary transition-colors"><input class="w-4 h-4 text-primary border-outline rounded" type="checkbox"/><span>抗衰老</span></label><label class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 cursor-pointer hover:border-primary transition-colors"><input class="w-4 h-4 text-primary border-outline rounded" type="checkbox"/><span>舒缓</span></label></div></div><div class="md:col-span-2"><label class="font-label-md text-label-md text-on-surface block mb-2">技术功能描述</label><textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="描述作用机制和主要成分..." rows="4"></textarea></div></div><div class="hidden" id="step-2-content"><p class="text-body-md text-on-surface-variant mb-6">请上传产品包装和质地的高分辨率图像。支持格式：JPG, PNG, WEBP（每个最大 5MB）。</p><div class="border-2 border-dashed border-outline-variant rounded-xl p-12 flex flex-col items-center justify-center bg-surface-container-low hover:bg-primary/5 transition-colors cursor-pointer mb-8"><span class="material-symbols-outlined text-[48px] text-primary mb-4">cloud_upload</span><p class="font-label-md">点击上传或拖拽文件至此</p><p class="text-label-sm text-on-surface-variant">SVG, PNG, JPG 或 GIF (最大 800x400px)</p></div><div class="grid grid-cols-2 md:grid-cols-4 gap-4"><div class="aspect-square rounded-lg overflow-hidden border border-outline-variant/30"><img alt="产品示例图" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrzIvq1NkD087tRNTo_n1hRGi9esM5qrzo3c-shSn_YgLvTk2MyQfetqp2Y8xZxOUc659aice3W8pdjle_6E8pNRcMq7Y-7aL6laMbYhabNfEYh5TDgTVTWxdomY9Ttt8HWB_ZFcU4hhsn3JLIcpD5Fn6FO-H3nNQufsCiqW_UpN1c7BFFXeCkDSbSZwP0KHm5UkrOAUz8uuAcYjqLkKjul-1aaTvKhtWTENyZlNb3dy35EZ7kUSgWCDczOH6q0N-7901gqBVWBt_r"/></div></div></div></div><div class="px-8 py-6 border-t border-outline-variant/30 bg-surface-container-low/20 flex justify-between items-center"><button class="px-6 py-2.5 rounded-lg border border-outline-variant text-on-surface-variant font-label-md hover:bg-surface-variant/50 transition-colors">上一步</button><div class="flex gap-4"><button class="px-8 py-2.5 rounded-lg border border-primary text-primary font-label-md hover:bg-primary/5 transition-colors">下一步</button><button class="px-8 py-2.5 rounded-lg bg-primary text-on-primary font-label-md hover:bg-primary/90 shadow-md transition-all active:scale-95 flex items-center gap-2"><span class="material-symbols-outlined text-[20px]">check_circle</span>完成提交</button></div></div></div></div></main>
+</div>
+</body></html>

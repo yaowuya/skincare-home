@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>新增用户</title>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration (Rhine Professional Light) -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#edeeef",
+                        "primary": "#001e40",
+                        "on-primary-fixed": "#001b3c",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#799dd6",
+                        "on-secondary-fixed": "#001d34",
+                        "on-surface": "#191c1d",
+                        "tertiary-container": "#2c3439",
+                        "surface-variant": "#e1e3e4",
+                        "primary-fixed-dim": "#a7c8ff",
+                        "secondary": "#3e6184",
+                        "on-tertiary-fixed-variant": "#40484d",
+                        "surface-bright": "#f8f9fa",
+                        "on-secondary-fixed-variant": "#24496b",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#f0f1f2",
+                        "background": "#f8f9fa",
+                        "secondary-fixed": "#cfe4ff",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-background": "#191c1d",
+                        "primary-fixed": "#d5e3ff",
+                        "outline": "#737780",
+                        "surface": "#f8f9fa",
+                        "inverse-primary": "#a7c8ff",
+                        "surface-tint": "#3a5f94",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface-dim": "#d9dadb",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e7e8e9",
+                        "tertiary-fixed-dim": "#bfc8ce",
+                        "surface-container-low": "#f3f4f5",
+                        "on-surface-variant": "#43474f",
+                        "tertiary-fixed": "#dbe3ea",
+                        "secondary-container": "#b1d5fe",
+                        "on-secondary-container": "#395c7f",
+                        "on-primary-fixed-variant": "#1f477b",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#949ca3",
+                        "secondary-fixed-dim": "#a6caf2",
+                        "on-tertiary-fixed": "#151d22",
+                        "primary-container": "#003366",
+                        "tertiary": "#171f24",
+                        "outline-variant": "#c3c6d1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for dropdowns if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #c3c6d1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased bg-background font-body-md h-screen w-screen overflow-hidden relative">
+<!-- Background Screen (User Management Page) -->
+<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBq2vt4xYbY_WtZsExXcnmaTrEzm1r5Rg49m4N1fYtrPDSmMMZgxWL8UGWrL2mFIYCCFpGO8RIgoDc2pR0PuOAWmog0zV2TJHj1fMU0lWcN5Y8b10GrWFDRnCyPZK5RbhnXn26f_y2EgQ4JKEgkVuELHAC2DIPRtZ2255ieTRL5Vx_s7jGMzIQNLUjEg0J9KSEfeuaT9D1O5cuaaHIvjEwJy318BvQi-4cQRQwl2Uh8Qs2qnEki-H19WFtIS_ucx5otKJchH9q-T8zl');"></div>
+<!-- Darkened Overlay Backdrop -->
+<div aria-hidden="true" class="absolute inset-0 bg-tertiary/60 backdrop-blur-sm z-40 transition-opacity duration-300"></div>
+<!-- Modal Container -->
+<div class="absolute inset-0 flex items-center justify-center z-50 p-4 sm:p-0">
+<!-- Modal Dialog -->
+<div aria-labelledby="modal-title" aria-modal="true" class="bg-surface/95 backdrop-blur-md rounded-xl shadow-[0_24px_48px_rgba(0,51,102,0.15)] border border-outline-variant/30 w-full max-w-[480px] flex flex-col overflow-hidden transform transition-all duration-300 scale-100 opacity-100" role="dialog">
+<!-- Header -->
+<div class="flex items-center justify-between px-6 py-5 border-b border-outline-variant/20">
+<h2 class="font-headline-md text-headline-md text-primary m-0 tracking-tight" id="modal-title">新增用户</h2>
+<button aria-label="Close" class="text-on-surface-variant hover:text-primary transition-colors duration-200 rounded-full p-1 hover:bg-surface-container-low" type="button">
+<span class="material-symbols-outlined block" style="font-size: 24px;">close</span>
+</button>
+</div>
+<!-- Body (Form) -->
+<div class="px-6 py-6 overflow-y-auto">
+<form class="flex flex-col gap-5">
+<!-- Username Field -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface" for="username">用户名</label>
+<input class="w-full h-10 px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors shadow-sm" id="username" name="username" placeholder="请输入用户姓名" type="text"/>
+</div>
+<!-- Role Field -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface" for="role">角色</label>
+<div class="relative">
+<select class="w-full h-10 pl-3 pr-10 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface appearance-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors shadow-sm cursor-pointer" id="role" name="role">
+<option disabled="" hidden="" selected="" value="">请选择角色</option>
+<option value="product_manager">产品经理</option>
+<option value="formula_analyst">配方分析师</option>
+<option value="chief_researcher">首席研究员</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-size: 20px;">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Registration Date Field -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface" for="reg_date">注册日期</label>
+<input class="w-full h-10 px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors shadow-sm cursor-pointer" id="reg_date" name="reg_date" type="date"/>
+</div>
+</form>
+</div>
+<!-- Footer (Actions) -->
+<div class="px-6 py-5 bg-surface-container-low/50 border-t border-outline-variant/20 flex justify-end gap-3 rounded-b-xl">
+<button class="px-5 py-2.5 rounded-lg font-label-md text-label-md text-on-surface-variant border border-outline-variant/60 bg-surface-container-lowest hover:bg-surface-container-low hover:text-on-surface transition-all duration-200" type="button">
+                    Cancel
+                </button>
+<button class="px-5 py-2.5 rounded-lg font-label-md text-label-md text-on-primary bg-primary hover:bg-primary/90 shadow-sm active:scale-[0.98] transition-all duration-200" type="button">
+                    Confirm
+                </button>
+</div>
+</div>
+</div>
+</body></html>

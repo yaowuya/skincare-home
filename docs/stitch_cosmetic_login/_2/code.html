@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>登录 - CosmeticLab</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#001b3c",
+                    "tertiary": "#171f24",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#151d22",
+                    "on-surface-variant": "#43474f",
+                    "on-primary-fixed-variant": "#1f477b",
+                    "inverse-on-surface": "#f0f1f2",
+                    "surface-bright": "#f8f9fa",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed": "#001d34",
+                    "surface-container-highest": "#e1e3e4",
+                    "inverse-primary": "#a7c8ff",
+                    "on-secondary-container": "#395c7f",
+                    "on-error": "#ffffff",
+                    "primary": "#001e40",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#3a5f94",
+                    "on-background": "#191c1d",
+                    "surface": "#f8f9fa",
+                    "inverse-surface": "#2e3132",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6",
+                    "secondary": "#3e6184",
+                    "surface-container-low": "#f3f4f5",
+                    "surface-container-high": "#e7e8e9",
+                    "outline-variant": "#c3c6d1",
+                    "on-surface": "#191c1d",
+                    "surface-container": "#edeeef",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "surface-variant": "#e1e3e4",
+                    "secondary-fixed": "#cfe4ff",
+                    "primary-fixed": "#d5e3ff",
+                    "tertiary-container": "#2c3439",
+                    "on-tertiary-container": "#949ca3",
+                    "outline": "#737780",
+                    "on-primary-container": "#799dd6",
+                    "surface-dim": "#d9dadb",
+                    "tertiary-fixed-dim": "#bfc8ce",
+                    "on-tertiary-fixed-variant": "#40484d",
+                    "secondary-container": "#b1d5fe",
+                    "background": "#f8f9fa",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed-dim": "#a6caf2",
+                    "primary-container": "#003366",
+                    "tertiary-fixed": "#dbe3ea",
+                    "on-secondary-fixed-variant": "#24496b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "gutter": "24px",
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "headline-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-lg": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "label-sm": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-xl": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "label-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-lg-mobile": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-lg": [
+                            "Plus Jakarta Sans"
+                    ]
+            },
+            "fontSize": {
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-xl": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "label-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Subtle Rhine Blue tint shadow for glassmorphism */
+        .shadow-glass {
+            box-shadow: 0 16px 32px -8px rgba(0, 51, 102, 0.08);
+        }
+        
+        /* Input focus transition */
+        .input-rhine {
+            transition: all 0.2s ease-in-out;
+        }
+        .input-rhine:focus {
+            border-color: #001e40; /* primary */
+            box-shadow: 0 0 0 1px #001e40;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex items-center justify-center">
+<!-- TopNavBar Omitted: Transactional linear flow (Login) -->
+<main class="w-full h-screen flex flex-col md:flex-row overflow-hidden">
+<!-- Left Side: Hero Image -->
+<div class="hidden md:flex w-1/2 relative bg-surface-container-high h-full items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-primary/10 z-10 mix-blend-multiply"></div>
+<img alt="" class="absolute inset-0 w-full h-full object-cover z-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4qlhRda_B2eZNqaUsoocwurs6tFZRQEP20xOqBYJjzbeo51JW16vHEw_I8ZAWQ6c22hMhrTBRtFRWwDW06RFsda3FuNmH8eFZRS6E2zzkF-Dyrkvn25AQUvhzMVMpXCjjfA-jWNVun-JKdoP_xNPUzEz2fnpH0Zq89JXGZvnLOB92ieHRnVXIEA8gWWfuXPs60Q_EHQh6i8UiRm3cpwMvWeBisWQI6mGHSLUV-VAXViRxa_LHfZOO2-g0fmHNQkRzfW_s9sAfPNo4"/>
+<div class="relative z-20 p-12 flex flex-col justify-end h-full w-full bg-gradient-to-t from-primary/80 to-transparent">
+<div class="text-on-primary max-w-lg">
+<h2 class="font-headline-xl text-headline-xl mb-4">形态之美，精准把握。</h2>
+<p class="font-body-lg text-body-lg opacity-90">访问业内最严谨的专业数据库。为理性的头脑量身打造。</p>
+</div>
+</div>
+</div>
+<!-- Right Side: Login Form -->
+<div class="w-full md:w-1/2 bg-surface h-full flex items-center justify-center p-8 md:p-16 lg:p-24 relative">
+<!-- Back to main app context affordance (Optional, keeping it minimal) -->
+<a class="absolute top-8 right-8 text-outline hover:text-primary transition-colors flex items-center gap-2 font-label-md text-label-md" href="#"><span class="material-symbols-outlined text-xl">arrow_back</span>
+                首页
+            </a>
+<div class="w-full max-w-md">
+<!-- Brand Anchor -->
+<div class="mb-12">
+<h1 class="font-headline-lg text-headline-lg text-primary font-bold mb-2">CosmeticLab</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">登录您的专业账号。</p>
+</div>
+<!-- Form -->
+<form class="space-y-6">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-on-surface font-semibold" for="email">电子邮箱</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-lg">mail</span>
+</div>
+<input class="input-rhine block w-full pl-10 pr-3 py-3 border border-outline-variant rounded-lg bg-surface-container-lowest text-on-surface placeholder-on-surface-variant focus:ring-0 focus:outline-none" id="email" name="email" placeholder="professional@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<label class="block font-label-md text-label-md text-on-surface font-semibold" for="password">密码</label>
+<a class="font-label-sm text-label-sm text-primary hover:text-primary-container transition-colors" href="#">忘记密码？</a>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-lg">lock</span>
+</div>
+<input class="input-rhine block w-full pl-10 pr-10 py-3 border border-outline-variant rounded-lg bg-surface-container-lowest text-on-surface placeholder-on-surface-variant focus:ring-0 focus:outline-none" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute inset-y-0 right-0 pr-3 flex items-center text-outline hover:text-primary transition-colors focus:outline-none" type="button">
+<span class="material-symbols-outlined text-lg">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center">
+<input class="h-4 w-4 text-primary focus:ring-primary border-outline-variant rounded rounded-[4px] bg-surface-container-lowest" id="remember-me" name="remember-me" type="checkbox"/>
+<label class="ml-2 block font-body-md text-body-md text-on-surface-variant" for="remember-me">保持登录状态 30 天</label>
+</div>
+<!-- Submit Button -->
+<button class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm font-label-md text-label-md text-on-primary bg-primary hover:bg-primary-container focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors" type="submit">登录</button>
+</form>
+<!-- Registration Prompt -->
+<div class="mt-8 pt-6 border-t border-outline-variant/30 text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">还没有账号？ 
+                        <a class="font-label-md text-label-md text-primary font-semibold hover:underline decoration-2 underline-offset-4" href="#">请求访问权限</a></p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Omitted: Transactional linear flow (Login) -->
+</body></html>

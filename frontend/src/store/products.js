@@ -17,7 +17,7 @@ export const useProductsStore = defineStore('products', () => {
   async function fetchProducts() {
     loading.value = true
     try {
-      const res = await productsApi.list({ page: page.value, per_page: 20, ...filters })
+      const res = await productsApi.list({ page: page.value, per_page: 20, sort_by: 'created_at', sort_order: 'desc', ...filters })
       items.value = res.data.items
       total.value = res.data.total
       page.value = res.data.page

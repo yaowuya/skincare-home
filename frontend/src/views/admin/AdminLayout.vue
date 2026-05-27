@@ -1,145 +1,242 @@
 <template>
-  <el-container class="admin-layout">
-    <el-aside :width="isCollapsed ? '64px' : '220px'" class="admin-aside">
-      <div class="logo-area">
-        <h1 v-if="!isCollapsed">CosmeticLab</h1>
-        <span v-else>CL</span>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <router-link class="brand" to="/admin/products">
+          <span class="brand-icon">C</span>
+          <span class="brand-text">CosmeticLab</span>
+        </router-link>
       </div>
-      <el-menu
-        :default-active="$route.path"
-        router
-        :collapse="isCollapsed"
-        background-color="#1a56a8"
-        text-color="#ffffffcc"
-        active-text-color="#ffffff"
-      >
-        <el-menu-item index="/admin/dashboard">
-          <el-icon><DataAnalysis /></el-icon>
-          <template #title>仪表盘</template>
-        </el-menu-item>
-        <el-menu-item index="/admin/products">
+      <nav class="sidebar-nav">
+        <router-link class="nav-item" to="/admin/products">
           <el-icon><Goods /></el-icon>
-          <template #title>产品管理</template>
-        </el-menu-item>
-        <el-menu-item index="/admin/users">
+          <span>产品管理</span>
+        </router-link>
+        <router-link class="nav-item" to="/admin/tags">
+          <el-icon><PriceTag /></el-icon>
+          <span>标签管理</span>
+        </router-link>
+        <router-link class="nav-item" to="/admin/users">
           <el-icon><User /></el-icon>
-          <template #title>用户管理</template>
-        </el-menu-item>
-        <el-menu-item index="/admin/tags">
-          <el-icon><CollectionTag /></el-icon>
-          <template #title>标签管理</template>
-        </el-menu-item>
-      </el-menu>
-    </el-aside>
-    <el-container>
-      <el-header class="admin-header">
-        <el-icon class="collapse-btn" @click="isCollapsed = !isCollapsed">
-          <Expand v-if="isCollapsed" />
-          <Fold v-else />
-        </el-icon>
-        <div class="header-right">
-          <el-dropdown @command="handleCommand">
-            <span class="user-info">
-              <el-icon><UserFilled /></el-icon>
-              {{ authStore.user?.username || 'Admin' }}
-              <el-icon><ArrowDown /></el-icon>
-            </span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item command="logout">退出登录</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div>
-      </el-header>
-      <el-main class="admin-main">
-        <router-view />
-      </el-main>
-    </el-container>
-  </el-container>
+          <span>用户管理</span>
+        </router-link>
+      </nav>
+      <div class="sidebar-bottom">
+        <el-dropdown trigger="click" @command="handleCommand" placement="right-end">
+          <div class="user-trigger">
+            <span class="user-avatar">{{ (authStore.user?.username || 'A').slice(0, 1).toUpperCase() }}</span>
+            <span class="user-name">{{ authStore.user?.username || 'Admin' }}</span>
+            <el-icon class="arrow-icon"><ArrowRight /></el-icon>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
+    </aside>
+    <main class="main-content">
+      <router-view />
+    </main>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { ArrowRight, Goods, PriceTag, User } from '@element-plus/icons-vue'
 import { useAuthStore } from '../../store/auth'
-import {
-  DataAnalysis,
-  Goods,
-  User,
-  CollectionTag,
-  Expand,
-  Fold,
-  UserFilled,
-  ArrowDown,
-} from '@element-plus/icons-vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
-const isCollapsed = ref(false)
 
-function handleCommand(cmd) {
-  if (cmd === 'logout') {
+function handleCommand(command) {
+  if (command === 'logout') {
     authStore.logout()
-    router.push('/admin/login')
+    router.push('/login')
   }
 }
 </script>
 
 <style scoped>
 .admin-layout {
-  height: 100vh;
+  display: flex;
+  min-height: 100vh;
+  background: #f7f8fb;
+  color: #1f2937;
 }
-.admin-aside {
-  background-color: #1a56a8;
-  transition: width 0.3s;
-  overflow: hidden;
+
+/* ===== Sidebar ===== */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
 }
-.logo-area {
-  height: 60px;
+
+.sidebar-top {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.brand {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #111827;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #4350fe;
   color: #fff;
   font-size: 18px;
-  font-weight: 700;
-  border-bottom: 1px solid #ffffff22;
+  font-weight: 800;
 }
-.logo-area h1 {
-  margin: 0;
+
+.brand-text {
   font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+/* ===== Nav ===== */
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border-radius: 8px;
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.nav-item .el-icon {
+  font-size: 18px;
+}
+
+.nav-item:hover {
+  color: #4350fe;
+  background: #f0f1ff;
+}
+
+.nav-item.router-link-active {
+  color: #fff;
+  background: #4350fe;
+  box-shadow: 0 4px 12px rgba(67, 80, 254, 0.3);
+}
+
+.nav-item.router-link-active .el-icon {
+  color: #fff;
+}
+
+/* ===== Bottom User ===== */
+.sidebar-bottom {
+  padding: 12px 10px 16px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.user-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.user-trigger:hover {
+  background: #f9fafb;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #dddfff;
+  color: #4350fe;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.user-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
-.el-menu {
-  border-right: none;
+
+.arrow-icon {
+  color: #9ca3af;
+  font-size: 12px;
 }
-.admin-header {
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  padding: 0 20px;
+
+/* ===== Main Content ===== */
+.main-content {
+  flex: 1;
+  margin-left: 220px;
+  padding: 32px 36px 56px;
+  min-width: 0;
 }
-.collapse-btn {
-  font-size: 20px;
-  cursor: pointer;
-  color: #606266;
-}
-.header-right {
-  display: flex;
-  align-items: center;
-}
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  color: #606266;
-  font-size: 14px;
-}
-.admin-main {
-  background-color: #f5f7fa;
-  min-height: 0;
+
+/* ===== Responsive ===== */
+@media (max-width: 760px) {
+  .sidebar {
+    width: 60px;
+  }
+  .brand-text,
+  .nav-item span,
+  .user-name,
+  .arrow-icon {
+    display: none;
+  }
+  .brand {
+    justify-content: center;
+  }
+  .nav-item {
+    justify-content: center;
+    padding: 0;
+  }
+  .sidebar-bottom {
+    padding: 12px 6px 16px;
+  }
+  .user-trigger {
+    justify-content: center;
+    padding: 8px;
+  }
+  .main-content {
+    margin-left: 60px;
+    padding: 20px 16px 40px;
+  }
 }
 </style>
