@@ -9,7 +9,7 @@ services:
     env_file: .env
     environment:
       - FLASK_ENV=production
-      - DATABASE_URL=${DATABASE_URL:?请在 .env 中设置 DATABASE_URL，格式: mysql+pymysql://用户名:密码@主机:端口/数据库名}
+      - DATABASE_URL=${DATABASE_URL}
       - UPLOAD_FOLDER=/app/uploads
       - SECRET_KEY=${SECRET_KEY:?请在 .env 中设置 SECRET_KEY}
       - JWT_SECRET=${JWT_SECRET:-${SECRET_KEY}}
