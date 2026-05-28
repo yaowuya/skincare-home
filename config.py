@@ -11,7 +11,7 @@ class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-change-in-production")
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL",
-        "postgresql://postgres:root@localhost:5432/skincare",
+        "mysql+pymysql://root:root@localhost:3306/skincare",
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
