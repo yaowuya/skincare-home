@@ -2,7 +2,7 @@
   <div class="admin-layout">
     <aside class="sidebar">
       <div class="sidebar-top">
-        <router-link class="brand" to="/admin/products">
+        <router-link class="brand" to="/">
           <span class="brand-icon">C</span>
           <span class="brand-text">CosmeticLab</span>
         </router-link>

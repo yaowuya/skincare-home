@@ -1,0 +1,45 @@
+# ===== .dockerignore =====
+# 减少 Docker 构建上下文大小，排除不需要的文件
+
+# Git
+.git
+.gitignore
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Docker
+docker-compose*.yml
+Dockerfile
+
+# Docs & design
+docs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude / MCP
+.claude/
+.mcp.json
+
+# Build artifacts (Docker 构建时会重新生成)
+app/static/
+
+# Test
+tests/

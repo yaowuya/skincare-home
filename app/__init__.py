@@ -66,6 +66,10 @@ def create_app(config_object=None):
     def serve_assets(filename):
         return send_from_directory(os.path.join(static_dir, "assets"), filename)
 
+    @app.route("/imgs/<path:filename>")
+    def serve_imgs(filename):
+        return send_from_directory(os.path.join(static_dir, "imgs"), filename)
+
     @app.route("/uploads/<path:filename>")
     def serve_uploads(filename):
         upload_dir = app.config["UPLOAD_FOLDER"]

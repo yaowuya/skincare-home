@@ -30,6 +30,9 @@ Desktop.ini
 node_modules/
 frontend/dist/
 
+# Built frontend (served by Flask)
+app/static/
+
 # Uploads (local development)
 uploads/*
 !uploads/.gitkeep
