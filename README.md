@@ -6,12 +6,12 @@
 
 ### 前台展示（公开）
 - **新品速递** — 产品瀑布流展示，支持剂型/功效/功能三维筛选
-- **产品详情** — 查看产品描述、成分列表、标签分类
+- **产品详情** — 查看产品描述、成分列表、标签分类、多图展示
 - **搜索** — 按名称、描述、成分模糊搜索
 
 ### 管理后台（管理员）
 - **Dashboard** — 产品数、用户数、待审核用户等统计概览
-- **产品管理** — 产品 CRUD，支持多标签选择（剂型/功效/功能）、图片上传
+- **产品管理** — 产品 CRUD，支持多标签选择（剂型/功效/功能）、多图上传、预览详情
 - **用户管理** — 用户 CRUD、注册审核、角色分配
 - **标签管理** — 自定义剂型/功效/功能三类标签
 
@@ -25,17 +25,17 @@
 |------|---------|
 | 前端 | Vue 3 + Element Plus + Pinia + Vue Router |
 | 后端 | Flask + Flask-RESTx + SQLAlchemy |
-| 数据库 | PostgreSQL 16 |
+| 数据库 | MySQL (PyMySQL) |
 | 认证 | JWT (PyJWT) |
-| 部署 | Docker Compose (腾讯云) |
+| 部署 | Docker Compose (多阶段构建) |
 
 ## 快速开始
 
 ### 环境要求
 
 - Python 3.11+
-- Node.js 20+
-- PostgreSQL 16（开发可用 Docker 替代）
+- Node.js 22+
+- MySQL 8.0+
 
 ### 1. 克隆项目
 
@@ -48,25 +48,26 @@ cd skincare-home
 
 ```bash
 cp .env.example .env
-# 编辑 .env 修改数据库连接等配置
+# 编辑 .env，修改 DATABASE_URL 等配置
 ```
 
-### 3. 启动后端
+### 3. 一键启动（推荐）
 
 ```bash
-# 创建虚拟环境（如有）
-python -m venv venv
-
-# 安装依赖
-./venv/Scripts/pip install -r requirements.txt
-
-# 启动开发服务器
-./venv/Scripts/flask --app "app:create_app()" run --reload
+# 构建前端 + 启动 Flask（http://localhost:5000）
+make dev
 ```
 
-### 4. 启动前端（开发模式）
+### 4. 分别启动（开发模式）
 
 ```bash
+# 安装后端依赖
+pip install -r requirements.txt
+
+# 启动后端
+python main.py
+
+# 安装并启动前端（另一终端）
 cd frontend
 npm install
 npm run dev
@@ -76,75 +77,54 @@ npm run dev
 
 ### 5. 数据库迁移
 
-首次初始化（只需执行一次，会创建 `migrations/` 目录）：
-
 ```bash
-./venv/Scripts/flask db init
-```
+# 应用迁移到数据库
+flask db upgrade
 
-每次模型变更后生成迁移脚本：
-
-```bash
-./venv/Scripts/flask db migrate -m "迁移说明"
-```
-
-应用迁移到数据库：
-
-```bash
-./venv/Scripts/flask db upgrade
-```
-
-回滚迁移：
-
-```bash
-./venv/Scripts/flask db downgrade
+# 模型变更后生成迁移脚本
+flask db migrate -m "迁移说明"
 ```
 
 ### 6. 初始化数据
 
 ```bash
 # 创建管理员账号
-./venv/Scripts/flask create-admin --username admin --email admin@test.com --password yourpassword
+flask create-admin --username admin --email admin@test.com --password yourpassword
 
 # 初始化功能分类标签
-./venv/Scripts/flask seed-tags
+flask seed-tags
 ```
 
-## PyCharm 配置
+## Makefile 命令
 
-### 1. 配置 Python 解释器
-- 打开 `File → Settings → Project: skincare-home → Python Interpreter`
-- 点击 ⚙ → `Add Local Interpreter`
-- 选择 `Existing` → 路径指向 `venv/Scripts/python.exe`
-- 点击 `OK`
-
-### 2. 配置 Flask Run（开发调试）
-
-**方式 A — 直接运行 main.py（推荐）**
-- 在 `main.py` 上右键 → `Run 'main'`
-- 或点击右上角 `Add Configuration...` → `+` → `Python`
-- Script path: 选择 `main.py`
-
-**方式 B — Flask 运行配置**
-- 点击右上角 `Add Configuration...` → `+` → `Flask Server`
-- Target type: `Script path`
-- FLASK_SCRIPT: 选择 `wsgi.py`
-- 勾选 `FLASK_DEBUG`
-- Additional options: `--host 0.0.0.0 --port 5000`
-- Working directory: 项目根目录
-- Environment variables: `FLASK_ENV=development`
-
-### 3. 配置 Tests
-- `Add Configuration...` → `+` → `Python tests → pytest`
-- Target: `Custom` → 输入 `tests/`
-- Working directory: 项目根目录
-- Python interpreter: 选择 venv
+| 命令 | 说明 |
+|------|------|
+| `make dev` | 一键启动：构建前端 + 启动后端 |
+| `make build` | 构建前端并复制到 app/static |
+| `make serve` | 启动 Flask 后端 |
+| `make clean` | 清除构建产物 |
+| `make install` | 安装前后端依赖 |
+| `make test` | 运行后端测试 |
+| `make migrate msg=描述` | 创建数据库迁移 |
+| `make upgrade` | 执行数据库迁移 |
+| `make admin USER=xx PASS=xx EMAIL=xx` | 创建管理员账号 |
+| `make seed-tags` | 初始化默认标签 |
 
 ## Docker 部署
+
+### 前置条件
+
+- 已有可访问的 MySQL 数据库
+- 在 `.env` 中配置 `DATABASE_URL`
+
+### 部署命令
 
 ```bash
 # 构建并启动
 docker compose up -d --build
+
+# 指定版本号构建
+VERSION=1.0.0 docker compose up -d --build
 
 # 查看日志
 docker compose logs -f backend
@@ -153,25 +133,45 @@ docker compose logs -f backend
 docker compose down
 ```
 
-生产环境使用 **多阶段构建**：
-1. Node 阶段构建 Vue SPA
-2. Python 阶段打包到 Flask 镜像中
-3. Flask 同时服务 API 和前端静态文件（无需 Nginx）
+### 生产环境说明
+
+- 镜像名：`skincare:${VERSION:-latest}`
+- 使用 **多阶段构建**：Node 阶段构建 Vue SPA → Python 阶段打包到 Flask 镜像
+- Flask 同时服务 API (`/api/*`) 和前端静态文件 (`/*`)，无需 Nginx
+- 上传文件挂载到宿主机 `/data/skincare/uploads`
+- 连接外部 MySQL 数据库（非 Docker 容器）
+- Gunicorn 生产服务器，默认 4 workers
+
+### 环境变量说明
+
+| 变量 | 必填 | 默认值 | 说明 |
+|------|------|--------|------|
+| `DATABASE_URL` | ✅ | — | MySQL 连接串，格式：`mysql+pymysql://用户名:密码@主机:端口/数据库名` |
+| `SECRET_KEY` | ✅ | — | Flask 密钥，生产环境请使用强随机值 |
+| `JWT_SECRET` | 否 | 取 SECRET_KEY | JWT 签名密钥 |
+| `JWT_EXPIRATION_HOURS` | 否 | 24 | JWT 令牌有效期（小时） |
+| `ADMIN_USERNAME` | 否 | admin | 初始化管理员用户名 |
+| `ADMIN_EMAIL` | 否 | admin@example.com | 初始化管理员邮箱 |
+| `ADMIN_PASSWORD` | ✅ | — | 初始化管理员密码 |
+| `GUNICORN_WORKERS` | 否 | 4 | Gunicorn 工作进程数 |
+| `PORT` | 否 | 5000 | 宿主机映射端口 |
+
+> **注意**：密码中如包含特殊字符（如 `@`、`#`），需进行 URL 编码（`@` → `%40`），否则 SQLAlchemy 解析连接串会出错。
 
 ## 运行测试
 
 ```bash
-# 运行所有测试（使用 SQLite 内存数据库，无需 PostgreSQL）
-./venv/Scripts/python -m pytest tests/ -v
+# 运行所有测试（使用 SQLite 内存数据库，无需 MySQL）
+python -m pytest tests/ -v
 
 # 运行单个测试文件
-./venv/Scripts/python -m pytest tests/test_auth.py -v
+python -m pytest tests/test_auth.py -v
 
-# 运行单个测试用例
-./venv/Scripts/python -m pytest tests/test_auth.py::TestLogin::test_login_success -v
+# 使用 Makefile
+make test
 ```
 
-当前测试覆盖：**56 个测试**，覆盖认证、用户管理、产品 CRUD、标签管理、文件上传。
+当前测试覆盖：**58 个测试**，覆盖认证、用户管理、产品 CRUD、标签管理、文件上传。
 
 ## 项目结构
 
@@ -191,7 +191,11 @@ skincare-home/
 ├── config.py             # 配置（从 .env 读取）
 ├── requirements.txt
 ├── Dockerfile            # 多阶段构建
-├── entrypoint.sh         # 启动脚本
+├── docker-compose.yml
+├── .dockerignore
+├── entrypoint.sh         # 启动脚本（迁移 + Gunicorn）
+├── Makefile              # 开发快捷命令
+├── wsgi.py               # 生产入口
 ├── frontend/             # Vue 3 前端
 │   └── src/
 │       ├── api/          # Axios + API 模块
@@ -202,8 +206,8 @@ skincare-home/
 │       │   └── admin/    # 管理后台
 │       └── components/   # 共享组件
 ├── tests/                # 后端测试
-├── docker-compose.yml
-└── .env.example
+├── migrations/           # 数据库迁移
+└── .env.example          # 环境变量示例
 ```
 
 ## API 概览
@@ -224,11 +228,6 @@ skincare-home/
 | Products | `POST/DELETE /api/products/<id>/image` | 管理员 | 产品图片上传/删除 |
 | Tags | `GET /api/tags/<type>` | 无 | 标签列表（type: form/effect/function） |
 | Tags | `POST/PUT/DELETE /api/tags/<type>/<id>` | 管理员 | 标签 CRUD |
-
-## 设计文档
-
-- [系统设计 Spec](docs/superpowers/specs/2026-05-24-admin-management-design.md)
-- [实施计划](docs/superpowers/plans/)
 
 ## License
 

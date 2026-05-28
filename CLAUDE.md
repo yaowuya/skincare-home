@@ -12,6 +12,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
+### Makefile（推荐）
+
+```bash
+make dev          # 一键启动：构建前端 + 启动后端
+make build        # 构建前端并复制到 app/static
+make serve        # 启动 Flask 后端
+make test         # 运行后端测试
+make clean        # 清除构建产物
+make install      # 安装前后端依赖
+make migrate msg=描述  # 创建数据库迁移
+make upgrade      # 执行数据库迁移
+make admin USER=xx PASS=xx EMAIL=xx  # 创建管理员
+make seed-tags    # 初始化默认标签
+```
+
 ### Backend (Flask)
 
 ```bash
@@ -21,7 +36,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Run dev server
 ./venv/Scripts/python main.py
 
-# Run all tests (uses SQLite in-memory, no PG needed)
+# Run all tests (uses SQLite in-memory, no MySQL needed)
 ./venv/Scripts/python -m pytest tests/ -v
 
 # Run single test
@@ -53,10 +68,11 @@ npm run dev
 npm run build
 ```
 
-### PostgreSQL Connection
+### MySQL Connection
 
-- User: `app`, Password: `password`, DB: `skincare`, Port: 5432
-- Config in `config.py` (overridable via `.env`)
+- User: `root`, Password: `root`, DB: `skincare`, Port: 3306
+- Connection string: `mysql+pymysql://root:root@localhost:3306/skincare`
+- Config in `config.py` (overridable via `.env` `DATABASE_URL`)
 
 ### Docker
 
@@ -79,7 +95,7 @@ Flask + Flask-RESTx layered structure:
 app/
 ├── api/            # Flask-RESTx namespaces (auth, users, products, tags)
 ├── auth/           # JWT decorators (jwt_required, admin_required)
-├── models/         # SQLAlchemy models (User, Product, Tag)
+├── models/         # SQLAlchemy models (User, Product, Tag, ProductImage)
 ├── utils/          # upload.py (file upload/delete helpers)
 ├── cli.py          # Flask CLI commands (create-admin, seed-tags)
 └── __init__.py     # App factory, DB init, API setup, SPA fallback routes
@@ -88,7 +104,7 @@ app/
 **Key patterns:**
 - All admin endpoints use `@admin_required` decorator
 - Public endpoints (product list, tag list, product detail) require no auth
-- UUID primary keys stored as `db.String(36)` (compatible with both SQLite and PostgreSQL)
+- UUID primary keys stored as `db.String(36)` (compatible with both SQLite and MySQL)
 - Flask-Migrate (Alembic) for migrations
 - Date strings from API are converted via `_parse_date()` helper
 - Image uploads stored in `UPLOAD_FOLDER` (Docker volume), served via `/uploads/`
@@ -127,4 +143,4 @@ Production uses a **multi-stage Docker build**:
 1. Stage 1 (Node): builds Vue SPA → `dist/`
 2. Stage 2 (Python): copies `dist/` into Flask's `static/` directory
 3. Flask serves both API (`/api/*`) and SPA (`/*`) on port 5000
-4. PostgreSQL 16 runs as a separate container
+4. Connects to external MySQL database (not a Docker container)
