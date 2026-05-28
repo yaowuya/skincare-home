@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: skincare:${VERSION:-latest}
     ports:
       - "${PORT:-5000}:5000"
     env_file: .env
@@ -13,7 +14,7 @@ services:
       - SECRET_KEY=${SECRET_KEY:?请在 .env 中设置 SECRET_KEY}
       - JWT_SECRET=${JWT_SECRET:-${SECRET_KEY}}
     volumes:
-      - uploads:/app/uploads
+      - /data/skincare/uploads:/app/uploads
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:5000/')\" || exit 1"]
@@ -21,6 +22,3 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
-
-volumes:
-  uploads:
