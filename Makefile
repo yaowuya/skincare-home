@@ -27,8 +27,7 @@ build: ## 构建前端并复制到 app/static
 	@echo ">>> 构建前端..."
 	cd frontend && $(NPM) run build
 	@echo ">>> 复制静态文件到 app/static..."
-	rm -rf app/static
-	cp -r frontend/dist app/static
+	$(PYTHON) -c "import shutil,os; os.path.exists('app/static') and shutil.rmtree('app/static'); shutil.copytree('frontend/dist','app/static')"
 	@echo ">>> 构建完成！执行 make serve 启动 http://localhost:5000"
 
 # ========== 后端启动 ==========
@@ -41,8 +40,7 @@ serve: ## 启动 Flask 后端（需先 make build）
 
 clean: ## 清除前端构建产物和 app/static
 	@echo ">>> 清除构建产物..."
-	rm -rf app/static
-	rm -rf frontend/dist
+	$(PYTHON) -c "import shutil,os; os.path.exists('app/static') and shutil.rmtree('app/static'); os.path.exists('frontend/dist') and shutil.rmtree('frontend/dist')"
 	@echo ">>> 清除完成"
 
 # ========== 依赖安装 ==========
