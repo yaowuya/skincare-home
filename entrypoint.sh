@@ -1,26 +1,6 @@
 #!/bin/sh
 set -e
 
-# 等待外部数据库就绪（最多 60 秒）
-echo "Waiting for database..."
-for i in $(seq 1 30); do
-  if python -c "
-from sqlalchemy import create_engine
-import os
-engine = create_engine(os.environ['DATABASE_URL'])
-conn = engine.connect()
-conn.close()
-" 2>/dev/null; then
-    echo "Database ready."
-    break
-  fi
-  if [ "$i" = "30" ]; then
-    echo "ERROR: Database not available after 60s, aborting."
-    exit 1
-  fi
-  sleep 2
-done
-
 # 执行数据库迁移
 flask db upgrade
 
