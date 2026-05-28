@@ -8,15 +8,12 @@ services:
     env_file: .env
     environment:
       - FLASK_ENV=production
-      - DATABASE_URL=postgresql://app:${DB_PASSWORD:-password}@postgres:5432/skincare
+      - DATABASE_URL=${DATABASE_URL:?请在 .env 中设置 DATABASE_URL}
       - UPLOAD_FOLDER=/app/uploads
       - SECRET_KEY=${SECRET_KEY:?请在 .env 中设置 SECRET_KEY}
       - JWT_SECRET=${JWT_SECRET:-${SECRET_KEY}}
     volumes:
       - uploads:/app/uploads
-    depends_on:
-      postgres:
-        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:5000/')\" || exit 1"]
@@ -25,21 +22,5 @@ services:
       retries: 3
       start_period: 10s
 
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_DB: skincare
-      POSTGRES_USER: app
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U app -d skincare"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
 volumes:
-  pgdata:
   uploads:

@@ -25,11 +25,6 @@ WORKDIR /app
 RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ \
     && pip config set global.trusted-host mirrors.aliyun.com
 
-# 系统依赖（netcat 用于 entrypoint 等待 PostgreSQL）
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends netcat-openbsd \
-    && rm -rf /var/lib/apt/lists/*
-
 # 安装 Python 依赖
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
